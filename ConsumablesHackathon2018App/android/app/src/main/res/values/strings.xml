@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">fZJvL77O0Byeon8lVx1tO_At0RZI571c9fdf-58e2-4897-be4e-014c6f378df7</string>
     <string name="app_name">Amazon Kitchen</string>
 </resources>
