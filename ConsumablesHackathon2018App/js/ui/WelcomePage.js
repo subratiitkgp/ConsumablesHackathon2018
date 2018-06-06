@@ -63,10 +63,10 @@ export class WelcomePage extends Component {
                 data.data, 
                 [{text: 'Accept', onPress: () => {
                   this.addAsin();
-                  this.scanProcessing = 0;
+                  setTimeout(() => this.scanProcessing = 0, 1500);
                 }},
                 {text: 'Ignore', onPress: () => {
-                  this.scanProcessing = 0;
+                  setTimeout(() => this.scanProcessing = 0, 1500);
                 }}
                 ]
               );
