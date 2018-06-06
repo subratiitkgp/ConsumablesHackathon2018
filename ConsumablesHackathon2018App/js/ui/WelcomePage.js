@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Alert, View, Button, FlatList, Text, Image } from 'react-native';
 import { Store } from '../data/Store';
 import { AsinStore } from '../data/AsinStore';
+import { RNCamera } from 'react-native-camera';
 
 export class WelcomePage extends Component {
   static navigationOptions = {
@@ -42,39 +43,72 @@ export class WelcomePage extends Component {
     }
   }
 
+  onBarCodeRead(data, type) {
+    Alert.alert("Data", data, () => Alert.alert("Type", type));
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={{flex: 1}}>
-        <View style={{margin: 10, width: '95%', flexDirection: 'row', borderWidth: 1, justifyContent: "space-evenly"}}>
-        <View style={{margin: 10}}>
-          <Button
-            title="Add"
-            onPress={() => {
-              this.addAsin();
-              this.printAsins();
-            }}
-          />
-        </View>
-        <View style={{margin: 10}}>
-          <Button
-            title="Reset"
-            onPress={() => {
-              this.deleteAllAsins();
-              this.printAsins();
-            }}
-          />
-        </View>
-        </View>
-        <View style={{flex: 1, margin: 10, borderWidth: 1}}>
-          <FlatList
-            removeClippedSubviews={true}
-            data={this.state.asins.reverse()}
-            keyExtractor={(asin) => asin.key}
-            initialNumToRender={3}
-            renderItem={(asin) => this.renderAsin(asin.item)}
-          />
-        </View>
+        {this.renderButtons()}
+        {this.renderAsinList()}
+        {this.renderCamera()}
+      </View>
+    )
+  }
+
+  renderCamera() {
+    return (
+      <View style={{borderWidth: 1, width: "95%", height: 100}}>
+        <Text>Hello</Text>
+        <RNCamera
+          style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          permissionDialogTitle={'Permission to use camera'}
+          permissionDialogMessage={'We need your permission to use your camera phone'}
+          onBarCodeRead={(data, type) => this.onBarCodeRead(data, type)}
+        />
+      </View>
+    )
+  }
+
+  renderButtons() {
+    return (
+      <View style={{margin: 10, width: '95%', flexDirection: 'row', borderWidth: 1, justifyContent: "space-evenly"}}>
+      <View style={{margin: 10}}>
+        <Button
+          title="Add"
+          onPress={() => {
+            this.addAsin();
+            this.printAsins();
+          }}
+        />
+      </View>
+      <View style={{margin: 10}}>
+        <Button
+          title="Reset"
+          onPress={() => {
+            this.deleteAllAsins();
+            this.printAsins();
+          }}
+        />
+      </View>
+    </View>
+    )
+  }
+
+  renderAsinList() {
+    return (
+      <View style={{flex: 1, margin : 10, borderWidth: 1}}>
+        <FlatList
+          removeClippedSubviews={true}
+          data={this.state.asins.reverse()}
+          keyExtractor={(asin) => asin.key}
+          initialNumToRender={3}
+          renderItem={(asin) => this.renderAsin(asin.item)}
+        />
       </View>
     )
   }
