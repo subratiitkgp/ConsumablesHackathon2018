@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Alert, View, Button, FlatList, Text } from 'react-native';
+import { Alert, View, Button, FlatList, Text, Image } from 'react-native';
 import { Store } from '../data/Store';
 import { AsinStore } from '../data/AsinStore';
 
@@ -81,7 +81,8 @@ export class WelcomePage extends Component {
 
   renderAsin(asin) {
     return (
-      <View style={{borderWidth: 1, margin: 5, alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', width: '95%', borderWidth: 1, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
+        <Image source={{uri: "https://images-eu.ssl-images-amazon.com/images/I/51Kt7nFLqEL._SS140_.jpg"}} style={{width: 75 , height: 100, margin: 10, marginRight: 50}} />
         <Text style={{fontSize: 30}}>{asin.id}</Text>
       </View>
     )
