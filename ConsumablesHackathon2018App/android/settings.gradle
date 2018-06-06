@@ -1,0 +1,3 @@
+rootProject.name = 'ConsumablesHackathon2018App'
+
+include ':app'
