@@ -13,8 +13,8 @@ export class AsinStore {
     asins.forEach((asin) => this.saveAsin(asin));
   }
 
-  static getAsin(asinId) {
-    let asin = Store.getSingle(this.getAsinSchema().name, 'asinId = "' + asinId + '"');
+  static getAsin(id) {
+    let asin = Store.getSingle(this.getAsinSchema().name, 'id = "' + id + '"');
     return this.cloneAndParseAsin(asin);
   }
 
@@ -35,10 +35,10 @@ export class AsinStore {
   static getAsinSchema() {
     return {
       name: "ASIN",
-      primaryKey: "asinId",
+      primaryKey: "id",
       properties: {
         key: 'string',
-        asinId: 'string',
+        id: 'string',
         type : 'string'
       }
     }
