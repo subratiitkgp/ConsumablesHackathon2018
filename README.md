@@ -1,7 +1,7 @@
 # ConsumablesHackathon2018
 Consumables Hackathon 2018
 
-# Setup Instructions
+# Setup Instructions (MAC)
 Install android studio with sdk from https://developer.android.com/studio/
 
 Add following export commands to your bashrc / zshrc:
@@ -26,7 +26,7 @@ npm install -g react-native-cli
 
 Open Android Studio and start the emulator / Connect your android mobile with usb debugging enabled.
 
-Clone the project and Go inside ConsumablesHackathon2018App/MobileApp folder
+Clone the project and Go inside ConsumablesHackathon2018App folder
 
 npm install
 
