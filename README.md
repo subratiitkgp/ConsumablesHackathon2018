@@ -26,7 +26,9 @@ npm install -g react-native-cli
 
 Open Android Studio and start the emulator / Connect your android mobile with usb debugging enabled.
 
-Clone the project and Go inside ConsumablesHackathon2018App folder
+Clone the project ( git clone https://github.com/subratiitkgp/ConsumablesHackathon2018.git )
+
+Go inside ConsumablesHackathon2018App folder
 
 npm install
 
