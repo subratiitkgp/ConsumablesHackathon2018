@@ -108,7 +108,15 @@ export class CompareAndSaveDP extends Component {
 
   renderATCButton() {
     return (
-      <QuantitySlider />
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+        <QuantitySlider />
+        <View style={{marginLeft: 5}}>
+        <Button
+          title="OK"
+          onPress={() => this.confirm()}
+        />
+      </View>
+      </View>
     )
   }
 
@@ -132,7 +140,8 @@ export class CompareAndSaveDP extends Component {
     )
   }
 
-  addAsin() {
+  confirm() {
+    this.props.onBack();
     return;
   }
 }

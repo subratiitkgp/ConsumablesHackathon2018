@@ -1,5 +1,7 @@
+ import {AsinStore} from './AsinStore';
  import {AmazonAsinStore} from './AmazonAsinStore';
  import {AmazonAsinList} from '../stub/AmazonAsin';
+ import {BarcodeMapper} from './BarcodeMapper';
  import {BarcodeList} from '../stub/Barcode';
  import {BarcodeMapper} from './BarcodeMapper';
  import {CustomerList} from '../stub/Customer';
@@ -7,9 +9,11 @@
  import {CartItemList} from '../stub/CartItem';
  import {CartStore} from './CartStore';
 
-
 export class DataInitializer {
     static initializeData() {
+        AsinStore.deleteAllAsins();
+        AsinStore.saveAsin({key: "ASIN1", id: "ASIN1", type: "asin"});
+
         const amazonAsins = AmazonAsinList;
         const barcodelist = BarcodeList;
         const customerList = CustomerList;
@@ -34,6 +38,10 @@ export class DataInitializer {
     }
 
     static getAllAsins() {
+        return AsinStore.getAllAsins();
+    }
+
+    static getAllAmazonAsins() {
         return AmazonAsinStore.getAllAsins();
     }
 }

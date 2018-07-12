@@ -5,6 +5,11 @@ import { Alert, View, Button, FlatList, Text, Image } from 'react-native';
 import { Store } from '../data/Store';
 import { AsinStore } from '../data/AsinStore';
 import { RNCamera } from 'react-native-camera';
+import { AmazonAsinStore } from '../data/AmazonAsinStore';
+import { BarcodeMapper } from '../data/BarcodeMapper';
+import {CustomerStore } from '../data/CustomerStore';
+import { DataInitializer } from '../data/DataInitializer';
+import { CartStore } from '../data/CartStore';
 
 export class WelcomePage extends Component {
   static navigationOptions = {
@@ -13,8 +18,9 @@ export class WelcomePage extends Component {
 
   constructor(props) {
     super(props);
-    Store.init([AsinStore.getAsinSchema()]);
+    Store.init([AsinStore.getAsinSchema(),AmazonAsinStore.getAsinSchema(),BarcodeMapper.getBarcodeSchema(),CustomerStore.getCustomerSchema(),CartStore.getCartSchema()]);
     const asins = AsinStore.getAllAsins();
+    //const storeasins = AmazonAsinStore.getAllAsins();
     this.state = { asins };
     this.asinCount = asins.length + 1;
     this.scanProcessing = 0;
@@ -47,7 +53,10 @@ export class WelcomePage extends Component {
     AsinStore.saveAsin(this.getAsin("ASIN" + this.asinCount));
     this.setState({asins: AsinStore.getAllAsins()});
     this.asinCount = this.asinCount + 1;
-    // this.printAsins();
+    //this.setState({asins: AmazonAsinStore.getAllAsins()});
+    //this.asinCount = this.asinCount + 10;
+    DataInitializer.initializeData();
+    console.log(AmazonAsinStore.getAllAsins().length);
   }
 
   getAsin(id) {
