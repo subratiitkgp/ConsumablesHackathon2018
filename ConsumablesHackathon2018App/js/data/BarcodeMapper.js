@@ -6,25 +6,25 @@ import { StringUtil } from '../util/StringUtil';
 export class BarcodeMapper {
   static saveBarcode(barcode) {
     let tmpBarcode = StringUtil.cloneObject(barcode);
-    Store.save(this.getAsinSchema().name, tmpBarcode);
+    Store.save(this.getBarcodeSchema().name, tmpBarcode);
   }
 
   static saveAllBarcodes(barcodes) {
-    barcodes.forEach((barcode) => this.saveAsin(barcode));
+    barcodes.forEach((barcode) => this.saveBarcode(barcode));
   }
 
   static getBarcode(id) {
-    let asin = Store.getSingle(this.getAsinSchema().name, 'id = "' + id + '"');
+    let asin = Store.getSingle(this.getBarcodeSchema().name, 'id = "' + id + '"');
     return this.cloneAndParseAsin(asin);
   }
 
   static getAllBarcodes() {
-    let barcodes = Store.getAll(this.getAsinSchema().name);
+    let barcodes = Store.getAll(this.getBarcodeSchema().name);
     return barcodes.map(barcode => this.cloneAndParseAsin(barcode));
   }
 
   static deleteAllBarcodes() {
-    Store.deleteAll(this.getAsinSchema().name);
+    Store.deleteAll(this.getBarcodeSchema().name);
   }
 
   static cloneAndParseBarcode(barcode) {
