@@ -31,16 +31,17 @@ export class QuantitySlider extends Component {
     const minusImageSource = "../../images/MinusIcon.jpg";
 
     return (
-      <View style={{width: 150, height: 50, borderWidth: 0.5,
+      <View style={{width: 100, height: 30,
                     flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          
         <TouchableWithoutFeedback onPress={() => this.onPlusClick()}>
-          <Image source={require(plusImageSource)} style={{width: 50 , height: 50}} />
+          <Image source={require(plusImageSource)} style={{width: 30 , height: 30}} />
         </TouchableWithoutFeedback>
-        <View style={{width: 50, height: 50, borderWidth: 0.5, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontSize: 30}}>{this.state.quantity}</Text>
+        <View style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{fontSize: 20}}>{this.state.quantity}</Text>
         </View>
         <TouchableWithoutFeedback onPress={() => this.onMinusClick()}>
-          <Image source={require(minusImageSource)} style={{width: 50 , height: 50}} />
+          <Image source={require(minusImageSource)} style={{width: 30 , height: 30}} />
         </TouchableWithoutFeedback>
       </View>
     )

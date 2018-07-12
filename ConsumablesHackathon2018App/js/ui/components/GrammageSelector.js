@@ -25,7 +25,7 @@ export class GrammageSelector extends Component {
       <Picker
         mode="dropdown"
         selectedValue={this.state.grammageSelected}
-        style={{ height: 50, width: 100 }}
+        style={{ height: 30, width: 100 }}
         onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}>
         {
           this.props.grammageValues.map( (item, index) => {

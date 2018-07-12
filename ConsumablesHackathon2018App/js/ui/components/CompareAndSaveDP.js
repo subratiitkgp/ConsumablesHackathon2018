@@ -5,6 +5,8 @@ import { Alert, View, Button, FlatList, Text, Image, TextInput } from 'react-nat
 import { Store } from '../../data/Store';
 import { AsinStore } from '../../data/AsinStore';
 import { RNCamera } from 'react-native-camera';
+import {QuantitySlider} from './QuantitySlider';
+import {GrammageSelector} from './GrammageSelector';
 
 export class CompareAndSaveDP extends Component {
 
@@ -17,6 +19,8 @@ export class CompareAndSaveDP extends Component {
     this.asinName = "Madhur Sugar";
     this.imageUri = "https://images-eu.ssl-images-amazon.com/images/I/51Kt7nFLqEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg";
     this.ourPrice = 399;
+    this.defaultGrammage = "10";
+    this.grammageValues = ["10", "20"];
 
     this.offer1Price = this.ourPrice * 0.9;
     this.offer2Price = this.ourPrice * 0.85;
@@ -55,7 +59,7 @@ export class CompareAndSaveDP extends Component {
       <View style={{flex: 1, margin: 5}}>
       {this.renderName()}
       {this.renderOurPrice()}
-      {this.renderYourPrice()}
+      {this.renderYourPrice()}    
       {this.renderPicker()}
       {this.renderATCButton()}
     </View>
@@ -97,19 +101,14 @@ export class CompareAndSaveDP extends Component {
     return (
       <View style={{ flexDirection: 'row'}}>
         <Text style={{fontSize: 15, fontWeight: 'bold'}}>Weight: </Text>
-        <Text style={{fontSize: 15}}>Picker</Text>                
+        <GrammageSelector defaultGrammage={this.defaultGrammage} grammageValues={this.grammageValues} />              
       </View>
     )
   }
 
   renderATCButton() {
     return (
-      <View style={{flex: 1, marginTop: 5}}>
-        <Button
-          title="Add To Cart"
-          onPress={() => this.addAsin()}
-        />
-      </View>
+      <QuantitySlider />
     )
   }
 
