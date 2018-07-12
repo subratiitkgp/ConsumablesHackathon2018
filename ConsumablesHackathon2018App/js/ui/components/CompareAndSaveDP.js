@@ -17,18 +17,20 @@ export class CompareAndSaveDP extends Component {
     this.asinName = asin.title;
     this.imageUri = asin.imageURL;
     this.ourPrice = asin.price;
-    this.defaultGrammage = "10";
-    this.grammageValues = ["10", "20"];
+    this.defaultGrammage = asin.variation;
+    const variations = AmazonAsinStore.getVariationsForVarationGroup(asin.variationgroup)
+    this.grammageValues = variations;
 
-    this.offer1Price = this.ourPrice * 0.9;
-    this.offer2Price = this.ourPrice * 0.85;
-    this.state = { text:  this.ourPrice.toString(), quantity: 0};
+    this.offer1Price = 10; // this.ourPrice * 0.9;
+    this.offer2Price = 11; // this.ourPrice * 0.85;
+    this.state = { text:  this.ourPrice, quantity: 0};
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={{flex: 1}}>
+        {this.renderName()}
         {this.renderATF()}
         {this.renderBTF()}
       </View>
@@ -55,7 +57,6 @@ export class CompareAndSaveDP extends Component {
   renderDetail() {
     return (
       <View style={{flex: 1, margin: 5}}>
-      {this.renderName()}
       {this.renderOurPrice()}
       {this.renderYourPrice()}    
       {this.renderPicker()}

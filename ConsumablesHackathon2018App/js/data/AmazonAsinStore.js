@@ -25,12 +25,11 @@ export class AmazonAsinStore {
 
   static getVariationsForVarationGroup(variationgroup) {
     const asins = this.getAsinsForVariationGroup(variationgroup);
-    const variations = asins.map((asin, index) => asin.variation);
+    return asins.map(asin => asin.variation);
   }
 
   static getAsinsForVariationGroup(variationgroup) {
     let asins = Store.get(this.getAsinSchema().name, 'variationgroup = "' + variationgroup + '"');
-    console.log(asins);
     return asins.map(asin => this.cloneAndParseAsin(asin));
   }
 

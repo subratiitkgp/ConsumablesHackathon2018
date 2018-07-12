@@ -8,6 +8,8 @@ import {DataInitializer} from '../../data/DataInitializer';
 import { AmazonAsinList } from '../../stub/AmazonAsin';
 import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { BarcodeMapper } from '../../data/BarcodeMapper';
+import { CustomerStore } from '../../data/CustomerStore';
+import { CartStore } from '../../data/CartStore';
 
 export class LoginPage extends Component {
   static navigationOptions = {
@@ -16,7 +18,13 @@ export class LoginPage extends Component {
 
   constructor(props) {
     super(props);
-    Store.init([AsinStore.getAsinSchema(), AmazonAsinStore.getAsinSchema()]);
+    Store.init([
+      AsinStore.getAsinSchema(), 
+      AmazonAsinStore.getAsinSchema(),
+      BarcodeMapper.getBarcodeSchema(),
+      CustomerStore.getCustomerSchema(),
+      CartStore.getCartSchema()
+    ]);
     const asins = AsinStore.getAllAsins();
     console.log(asins);
   }

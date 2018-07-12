@@ -29,7 +29,9 @@ export class CompareAndSavePage extends Component {
   onBarCodeRead(data, type) {
     if (this.scanProcessing === 1) return;
     this.scanProcessing = 1;
-    const scannedAsin = AmazonAsinStore.getAsinFromExternalBarcode(data.data);
+    const barcode = data.data;
+    // const barcode = "ext1";
+    const scannedAsin = AmazonAsinStore.getAsinFromExternalBarcode(barcode);
     this.setState({displayMode: "asinDetail", scannedAsin});
   }
 

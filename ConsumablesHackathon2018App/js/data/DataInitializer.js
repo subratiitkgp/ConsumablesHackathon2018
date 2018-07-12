@@ -3,7 +3,6 @@
  import {AmazonAsinList} from '../stub/AmazonAsin';
  import {BarcodeMapper} from './BarcodeMapper';
  import {BarcodeList} from '../stub/Barcode';
- import {BarcodeMapper} from './BarcodeMapper';
  import {CustomerList} from '../stub/Customer';
  import {CustomerStore} from './CustomerStore';
  import {CartItemList} from '../stub/CartItem';
@@ -15,25 +14,19 @@ export class DataInitializer {
         AsinStore.saveAsin({key: "ASIN1", id: "ASIN1", type: "asin"});
 
         const amazonAsins = AmazonAsinList;
-        const barcodelist = BarcodeList;
-        const customerList = CustomerList;
-        const cartItemsList = CartItemList;
-        console.log(amazonAsins.length);
-        console.log("Barcode list");
-        console.log(barcodelist.length);
-        console.log("Customer List");
-        console.log(customerList.length);
-        console.log("CartItem List");
-        console.log(cartItemsList.length);
-        CustomerStore.deleteAllCustomers();
         AmazonAsinStore.deleteAllAsins();
-        BarcodeMapper.deleteAllBarcodes();
-        CartStore.deleteAllCartItems();
-
-
         AmazonAsinStore.saveAllAsins(amazonAsins); 
+
+        const barcodelist = BarcodeList;
+        BarcodeMapper.deleteAllBarcodes();
         BarcodeMapper.saveAllBarcodes(barcodelist);
+
+        const customerList = CustomerList;
+        CustomerStore.deleteAllCustomers();
         CustomerStore.saveAllCustomers(customerList);
+
+        const cartItemsList = CartItemList;
+        CartStore.deleteAllCartItems();
         CartStore.saveAllCartItems(cartItemsList);
     }
 
