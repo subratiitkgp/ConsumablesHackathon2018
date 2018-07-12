@@ -8,7 +8,7 @@ import { RNCamera } from 'react-native-camera';
 
 export class WelcomePage extends Component {
   static navigationOptions = {
-    title: "Grocery Shopping"
+    title: "Grocery Shopping In Seconds"
   };
 
   constructor(props) {

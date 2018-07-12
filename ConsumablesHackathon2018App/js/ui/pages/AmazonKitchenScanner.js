@@ -2,11 +2,12 @@
 
 import React, { Component } from 'react';
 import { View, Button, FlatList, Text, Image, ToastAndroid, TouchableWithoutFeedback } from 'react-native';
-import { Store } from '../data/Store';
-import { AsinStore } from '../data/AsinStore';
+import { Store } from '../../data/Store';
+import { AsinStore } from '../../data/AsinStore';
 import { RNCamera } from 'react-native-camera';
-import {LogoTitle} from './LogoTitle';
-import {QuantitySlider} from './components/QuantitySlider';
+import {LogoTitle} from '../components/LogoTitle';
+import {QuantitySlider} from '../components/QuantitySlider';
+//import {Footer} from '../components/Footer';
 
 export class AmazonKitchenScanner extends Component {
   static navigationOptions = {
@@ -17,7 +18,10 @@ export class AmazonKitchenScanner extends Component {
     super(props);
     Store.init([AsinStore.getAsinSchema()]);
     const asins = AsinStore.getAllAsins();
-    this.state = { asins };
+    this.state = { 
+      asins,
+      totalSaving: 0
+    };
     this.asinCount = asins.length + 1;
     this.scanProcessing = 0;
     this.deleteAllAsins();
@@ -62,6 +66,7 @@ export class AmazonKitchenScanner extends Component {
       <View style={{flex: 1}}>
         {this.renderCamera()}
         {this.renderAsinList()}
+        {this.renderFooter()}
       </View>
     )
   }
@@ -122,5 +127,33 @@ export class AmazonKitchenScanner extends Component {
 
   onPlusClick() {
     return
+  }
+
+  renderFooter() {
+    return (
+      <View style={{margin: 5, width: '97%', flexDirection: 'row', borderWidth: 1}}>
+          <View style={{margin: 5}}>
+          <Button
+              title="Checkout"
+              onPress={() => {
+              if (this.state.asins.length == 0) {
+                  Alert.alert("Warning", "Please add few products to checkout");
+                  return;
+              }
+              const endTime = new Date();
+              const timeDiff = (endTime - this.startTime) / 1000;
+              Alert.alert("Congrats", "You have shopped for " + this.state.asins.length + " item(s) in " + timeDiff + " seconds",
+                          [{text: "OK", onPress: () => this.deleteAllAsins()}]
+                          );
+              }}
+          />
+          </View>
+
+          <View style={{margin:5, flexDirection: 'row'}}>
+              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Total Saving: </Text>
+              <Text style={{fontSize: 20, color: 'red'}}>₹{this.state.totalSaving.toFixed(2)}</Text>             
+          </View>
+      </View>
+    );
   }
 }
