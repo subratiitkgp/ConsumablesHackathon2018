@@ -72,11 +72,19 @@ export class ModifySticker extends Component {
     const modifiedText = "Your Choice: Variation - " + modifiedAsin.variation + 
                          ", quantity - " + cartItem.quantity;
 
-    const switchValue = this.state.switchValues[cartItem.asin] === undefined ? false : this.state.switchValues[cartItem.asin];
+    const asin = AmazonAsinStore.getAsin(cartItem.asin);                     
+    const switchValue = this.state.switchValues[cartItem.asin] === undefined ? false : 
+                        this.state.switchValues[cartItem.asin];
     return (
       <View key={cartItem.cartItemId} style={{borderWidth: 0.5, margin: 20, alignItems: 'center'}}>
-        <Text style={{fontSize: 20}}>{originalText}</Text>
-        <Text style={{fontSize: 20}}>{modifiedText}</Text>
+        <View style={{width: "97%", flexDirection: 'row', alignItems: 'center',
+                      justifyContent: 'space-between'}}>
+          <Image source={{uri: asin.imageURL}} style={{width: 50 , height: 60, margin: 5}} />
+          <View style={{width: 280}}>
+            <Text style={{fontSize: 13}}>{originalText}</Text>
+            <Text style={{fontSize: 13}}>{modifiedText}</Text>
+          </View>
+        </View>  
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text>Accept</Text>
           <Switch value={switchValue} onValueChange={(value) => this.onSwitch(cartItem, value)}/>
