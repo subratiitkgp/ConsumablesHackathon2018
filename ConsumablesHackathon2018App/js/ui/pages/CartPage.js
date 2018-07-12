@@ -2,12 +2,11 @@
 
 import React, { Component } from 'react';
 import { Alert, View, Button, FlatList, Text, Image } from 'react-native';
-import { Store } from '../../data/Store';
-import { AsinStore } from '../../data/AsinStore';
+import {CartItem} from '../components/CartItem';
 
 export class CartPage extends Component {
   static navigationOptions = {
-    title: "Grocery Shopping In Seconds"
+    title: "View Cart"
   };
 
   constructor(props) {
@@ -19,6 +18,18 @@ export class CartPage extends Component {
       <View style={{flex: 1}}>
         {this.renderPageHeader()}
         {this.renderCartItems()}
+      </View>
+    )
+  }
+
+  renderPageHeader() {
+    return undefined;
+  }
+
+  renderCartItems() {
+    return (
+      <View>
+        <CartItem />
       </View>
     )
   }
