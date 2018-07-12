@@ -2,23 +2,18 @@
 
 export const CustomerList = [
     {
-        id:"1",
+        id:1,
         name:"Anand Goyal",
-        address: "",
+        address: "CV Raman Nagar, Bangalore",
     },
     {
-        id:"2",
-        name:"B01CJVVLUA",
-        address: "",
+        id:2,
+        name:"Pulkit",
+        address: "Mahadevapura, Bangalore",
     },
     {
-        id:"3",
-        name:"B01CJVVLUA",
-        address: "",
+        id:3,
+        name:"Subrat",
+        address: "Kundanahalli, Bangalore",
     },
-    {
-        id:"int1",
-        name:"B01CJVVLUA",
-        address: "",
-    }
 ]        
