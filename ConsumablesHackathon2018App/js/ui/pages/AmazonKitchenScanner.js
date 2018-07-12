@@ -9,6 +9,7 @@ import {LogoTitle} from '../components/LogoTitle';
 import {QuantitySlider} from '../components/QuantitySlider';
 import { BarcodeMapper } from '../../data/BarcodeMapper';
 import { CartStore } from '../../data/CartStore';
+import {CartItem} from '../components/CartItem';
 //import {Footer} from '../components/Footer';
 
 export class AmazonKitchenScanner extends Component {
@@ -93,7 +94,7 @@ export class AmazonKitchenScanner extends Component {
           data={this.state.cartItems.reverse()}
           keyExtractor={(asin) => asin.key}
           initialNumToRender={3}
-          renderItem={(cartItems) => this.renderAsin(cartItems.item, cartItems.index)}
+          renderItem={(cartItems) => this.renderCartItem(cartItems.item, cartItems.index)}
         />
     )
   }
@@ -115,6 +116,12 @@ export class AmazonKitchenScanner extends Component {
           </View>
       </View>
     )
+  }
+
+  renderCartItem(cartItem, index) {
+    return (
+      <CartItem cartItem={cartItem} renderSecondRow={false} />
+    );
   }
 
   onQuantityChange(asin, quantity) {
