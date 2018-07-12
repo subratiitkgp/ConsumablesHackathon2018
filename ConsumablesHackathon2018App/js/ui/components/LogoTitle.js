@@ -11,7 +11,7 @@ export class LogoTitle extends Component {
                 source={{uri: "https://images-eu.ssl-images-amazon.com/images/I/51Kt7nFLqEL._SS140_.jpg"}}
                 style={{ width: 30 , height: 40 }}
             />
-            <Text style={{fontSize: 25, alignItems: 'center', marginLeft: 50}}>{"Amazon Kitchen"}</Text>
+            <Text style={{fontSize: 25, alignItems: 'center', marginLeft: 30}}>{"Amazon Kitchen"}</Text>
             </View>
         );
     }

@@ -8,7 +8,7 @@ export class QuantitySlider extends Component {
     super(props);
 
     this.state = {
-      quantity: 1
+      quantity: this.props.defaultQuantity === undefined ? 1 : this.props.quantity
     };
   }
 

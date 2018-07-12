@@ -102,13 +102,17 @@ export class AmazonKitchenScanner extends Component {
     let asin = AmazonAsinStore.getAsin(cartItem.asin);
     return (
       <View style={{flexDirection: 'row', width: '97%', borderWidth: 1, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
-        <Image source={{uri: asin.imageURL}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
+        <View style={{width: 30, marginRight: 20}}>
+          <Image source={{uri: asin.imageURL}} style={{width: '100%', height: 40, margin: 5}} />
+        </View>
         <TouchableWithoutFeedback onPress={() => this.onDetailPage()}>
-          <View>
-            <Text style={{fontSize: 10}}>{asin.title}</Text>
+          <View style={{width: 195}}>
+            <Text style={{fontSize: 20}}>{asin.title}</Text>
           </View>
         </TouchableWithoutFeedback>
-        <QuantitySlider onQuantityChange={(quantity) => this.onQuantityChange(asin, quantity)}/>
+          <View style={{width: 40}}>
+            <QuantitySlider onQuantityChange={(quantity) => this.onQuantityChange(asin, quantity)}/>
+          </View>
       </View>
     )
   }
