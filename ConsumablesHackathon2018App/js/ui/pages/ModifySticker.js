@@ -114,24 +114,21 @@ export class ModifySticker extends Component {
 
   getModifiedCartItems() {
     const cartItems = CartStore.getAllCartItems();
-    return cartItems;
-    /*
     const modifiedCartItems = [];
     for (let i = 0; i < cartItems.length; ++i) {
-      if (checkIfModified(cartItems[i]) === true) {
+      if (this.checkIfModified(cartItems[i]) === true) {
         modifiedCartItems.push(cartItems[i]);
       }
     }
 
     return modifiedCartItems;
-    */
   }
 
   checkIfModified(cartItem) {
     if (cartItem.fromBarcode === "") return false;
     if (cartItem.source != "Internal") return false;
-
     const barcodeItem = BarcodeMapper.getBarcode(cartItem.fromBarcode);
+
     if (cartItem.asin != barcodeItem.asin) return true;
     if (cartItem.quantity != barcodeItem.quantity) return true;
     return false;

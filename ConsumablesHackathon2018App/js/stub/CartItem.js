@@ -22,10 +22,10 @@ export const CartItemList = [
     {
         cartItemId: 3,
         asin:"B01N5LENPM",
-        quantity:1,
+        quantity:2,
         customerId:2,
         fromBarcode: "int3",
-        source:"External",
+        source:"Internal",
         appliedOffer: "23453",
         externalPrice: 0.0,
     },
