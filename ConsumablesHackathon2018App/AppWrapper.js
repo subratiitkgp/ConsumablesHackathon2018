@@ -13,7 +13,8 @@ import { AmazonKitchenScanner } from './js/ui/pages/AmazonKitchenScanner';
 
 const AppWrapper = createStackNavigator({
   HomePage: { screen: LoginPage },
-  CompareAndSavePage: { screen: CompareAndSavePage }
+  CompareAndSavePage: { screen: CompareAndSavePage },
+  AmazonKitchenScanner: { screen: AmazonKitchenScanner}
 });
 
 let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME, installMode: codePush.InstallMode.IMMEDIATE };

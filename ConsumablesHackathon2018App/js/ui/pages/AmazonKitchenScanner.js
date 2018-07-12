@@ -16,7 +16,6 @@ export class AmazonKitchenScanner extends Component {
 
   constructor(props) {
     super(props);
-    Store.init([AsinStore.getAsinSchema()]);
     const asins = AsinStore.getAllAsins();
     this.state = { 
       asins,

@@ -31,7 +31,7 @@ export class LoginPage extends Component {
       <View style={{flex: 1, justifyContent: "space-evenly", alignItems: 'center'}}>
         <Button
           title="Customer 1"
-          onPress={() => this.props.navigation.navigate("CompareAndSavePage")}
+          onPress={() => this.props.navigation.navigate("AmazonKitchenScanner")}
         />
         <Button
           title="Customer 2"
