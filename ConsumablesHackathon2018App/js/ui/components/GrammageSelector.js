@@ -22,19 +22,22 @@ export class GrammageSelector extends Component {
 
   render() {
     return (
-      <Picker
-        mode="dropdown"
-        selectedValue={this.state.grammageSelected}
-        style={{ height: 30, width: 100 }}
-        onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}>
-        {
-          this.props.grammageValues.map( (item, index) => {
-            return (
-              <Picker.Item key={item} label={item} value={item} />
-            )
-          })
-        }
-      </Picker>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text>Weight</Text>
+        <Picker
+          mode="dropdown"
+          selectedValue={this.state.grammageSelected}
+          style={{ height: 30, width: 100 }}
+          onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}>
+          {
+            this.props.grammageValues.map( (item, index) => {
+              return (
+                <Picker.Item key={item} label={item} value={item} />
+              )
+            })
+          }
+        </Picker>
+      </View>
     );
   }
 }

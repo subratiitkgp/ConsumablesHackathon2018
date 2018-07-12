@@ -8,21 +8,23 @@ export class QuantitySlider extends Component {
     super(props);
 
     this.state = {
-      quantity: 1
+      quantity: this.props.defaultQuantity === undefined ? 1 : this.props.defaultQuantity
     };
   }
 
   onPlusClick() {
-    this.setState({quantity: this.state.quantity + 1});
+    const updatedQuantity = this.state.quantity + 1;
+    this.setState({quantity: updatedQuantity});
     if (this.props.onQuantityChange != undefined) {
-      this.props.onQuantityChange(this.state.quantity);
+      this.props.onQuantityChange(updatedQuantity);
     }
   }
 
   onMinusClick() {
-    this.setState({quantity: this.state.quantity > 0 ? this.state.quantity - 1 : 0})
+    const updatedQuantity = this.state.quantity > 0 ? this.state.quantity - 1 : 0;
+    this.setState({quantity: updatedQuantity})
     if (this.props.onQuantityChange != undefined) {
-      this.props.onQuantityChange(this.state.quantity);
+      this.props.onQuantityChange(updatedQuantity);
     }
   }
 
