@@ -14,7 +14,7 @@ export class AmazonAsinStore {
   }
 
   static getAsin(id) {
-    let asin = Store.getSingle(this.getAsinSchema().name, 'id = "' + id + '"');
+    let asin = Store.getSingle(this.getAsinSchema().name, 'asin = "' + id + '"');
     return this.cloneAndParseAsin(asin);
   }
 

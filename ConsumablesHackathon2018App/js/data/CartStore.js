@@ -14,20 +14,20 @@ export class CartStore {
   }
 
   static getCartItem(id) {
-    let tmpid = Store.getSingle(this.getCartSchema().name, 'asin = "' + id + '"');
-    return this.cloneAndParseAsin(tmpid);
+    let tmpid = Store.getSingle(this.getCartSchema().name, 'cartItemId = "' + id + '"');
+    return this.cloneAndParseCartItem(tmpid);
   }
 
   static getAllCartItems() {
     let ids = Store.getAll(this.getCartSchema().name);
-    return ids.map(id => this.cloneAndParseAsin(id));
+    return ids.map(id => this.cloneAndParseCartItem(id));
   }
 
   static deleteAllCartItems() {
     Store.deleteAll(this.getCartSchema().name);
   }
 
-  static cloneAndParseCartItem(id) {
+  static cloneAndParseCartItem(barcode) {
     let tmpId = StringUtil.cloneObject(barcode);
     return tmpId;
   }
@@ -35,8 +35,9 @@ export class CartStore {
   static getCartSchema() {
     return {
       name: "CartItem",
-      primaryKey: "asin",
+      primaryKey: "cartItemId",
       properties: {
+        cartItemId: 'int',
         asin: 'string',
         quantity: 'int',
         customerId: 'int',

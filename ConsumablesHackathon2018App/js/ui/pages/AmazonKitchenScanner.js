@@ -1,12 +1,14 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Button, FlatList, Text, Image, ToastAndroid, TouchableWithoutFeedback } from 'react-native';
+import { View, Button, FlatList, Text, Image, ToastAndroid, TouchableWithoutFeedback, Alert } from 'react-native';
 import { Store } from '../../data/Store';
-import { AsinStore } from '../../data/AsinStore';
+import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
 import {LogoTitle} from '../components/LogoTitle';
 import {QuantitySlider} from '../components/QuantitySlider';
+import { BarcodeMapper } from '../../data/BarcodeMapper';
+import { CartStore } from '../../data/CartStore';
 //import {Footer} from '../components/Footer';
 
 export class AmazonKitchenScanner extends Component {
@@ -16,47 +18,32 @@ export class AmazonKitchenScanner extends Component {
 
   constructor(props) {
     super(props);
-    const asins = AsinStore.getAllAsins();
+    const cartItems = CartStore.getAllCartItems();
     this.state = { 
-      asins,
-      totalSaving: 0
+      cartItems,
+      totalSaving: 0,
     };
-    this.asinCount = asins.length + 1;
-    this.scanProcessing = 0;
-    this.deleteAllAsins();
-    this.startTime = new Date();
-    this.imageUrls = [
-      "https://images-eu.ssl-images-amazon.com/images/I/51Kt7nFLqEL._SS140_.jpg",
-      "https://images-eu.ssl-images-amazon.com/images/I/51dsI-aMgsL._SS140_.jpg",
-      "https://images-eu.ssl-images-amazon.com/images/I/418HMs0w1YL._SS140_.jpg",
-      "https://images-eu.ssl-images-amazon.com/images/I/41-9Bi%2BlgVL._SS140_.jpg",
-      "https://images-eu.ssl-images-amazon.com/images/I/51rsCtqEPWL._SS140_.jpg",
-      "https://images-eu.ssl-images-amazon.com/images/I/51DKt-v2uWL._SS140_.jpg",
-      "https://images-eu.ssl-images-amazon.com/images/I/51NGLOYEJjL._SS140_.jpg"
-    ]
-  }
-
-  addAsin() {
-    AsinStore.saveAsin(this.getAsin("ASIN" + this.asinCount));
-    this.setState({asins: AsinStore.getAllAsins()});
-    this.asinCount = this.asinCount + 1;
-  }
-
-  deleteAllAsins() {
-    AsinStore.deleteAllAsins();
-    this.setState({asins: AsinStore.getAllAsins()});
-    this.asinCount = 1;
+    this.asinQuantity = {
+    };
     this.scanProcessing = 0;
     this.startTime = new Date();
-    // this.printAsins();
+    this.customerID = 1;
   }
 
-  getAsin(id) {
-    return {
-      key: id,
-      id,
-      type: "asin"
+  addAsinToCart(scannedAsin, barcode) {
+    let size = CartStore.getAllCartItems().length;
+    const cartItem = {
+      cartItemId: size + 1,
+      asin: scannedAsin.asin,
+      quantity: this.asinQuantity[scannedAsin.asin] === undefined ? 1 : this.asinQuantity[scannedAsin.asin],
+      customerId: this.customerID, 
+      fromBarcode: barcode,
+      source: "Internal",
+      appliedOffer: "",
+      externalPrice: 0
     }
+    CartStore.saveCartItem(cartItem);
+    this.setState({cartItems: CartStore.getAllCartItems()});
   }
 
   render() {
@@ -88,7 +75,9 @@ export class AmazonKitchenScanner extends Component {
   onBarCodeRead(data, type) {
     if (this.scanProcessing === 1) return;
     this.scanProcessing = 1;
-    this.addAsin();
+    let barcode = data.data;
+    const scannedAsin = BarcodeMapper.getAsinFromBarcode(barcode);
+    this.addAsinToCart(scannedAsin, barcode);
     ToastAndroid.showWithGravity(
       'Added To Cart',
       ToastAndroid.SHORT,
@@ -101,27 +90,31 @@ export class AmazonKitchenScanner extends Component {
     return (
         <FlatList
           removeClippedSubviews={true}
-          data={this.state.asins.reverse()}
+          data={this.state.cartItems.reverse()}
           keyExtractor={(asin) => asin.key}
           initialNumToRender={3}
-          renderItem={(asin) => this.renderAsin(asin.item, asin.index)}
+          renderItem={(cartItems) => this.renderAsin(cartItems.item, cartItems.index)}
         />
     )
   }
 
-  renderAsin(asin, index) {
-    const asinSize = this.state.asins.length;
-    const asinId = asinSize - 1 - index;
-    const imageUri = this.imageUrls[asinId % this.imageUrls.length];
+  renderAsin(cartItem, index) {
+    let asin = AmazonAsinStore.getAsin(cartItem.asin);
     return (
       <View style={{flexDirection: 'row', width: '97%', borderWidth: 1, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
-        <Image source={{uri: imageUri}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
+        <Image source={{uri: asin.imageURL}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
         <TouchableWithoutFeedback onPress={() => this.onPlusClick()}>
-          <Text style={{fontSize: 20, marginRight: 120}}>{asin.id}</Text>
+          <View>
+            <Text style={{fontSize: 20}}>{asin.title}</Text>
+          </View>
         </TouchableWithoutFeedback>
-        <QuantitySlider />
+        <QuantitySlider onQuantityChange={(quantity) => this.onQuantityChange(asin, quantity)}/>
       </View>
     )
+  }
+
+  onQuantityChange(asin, quantity) {
+    this.asinQuantity[asin.asin] = quantity;
   }
 
   onPlusClick() {
@@ -142,7 +135,7 @@ export class AmazonKitchenScanner extends Component {
               const endTime = new Date();
               const timeDiff = (endTime - this.startTime) / 1000;
               Alert.alert("Congrats", "You have shopped for " + this.state.asins.length + " item(s) in " + timeDiff + " seconds",
-                          [{text: "OK", onPress: () => this.deleteAllAsins()}]
+                          [{text: "OK", onPress: () => this.onPlusClick()}]
                           );
               }}
           />

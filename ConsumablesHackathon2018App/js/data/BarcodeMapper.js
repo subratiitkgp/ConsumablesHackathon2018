@@ -2,6 +2,7 @@
 
 import { Store } from './Store';
 import { StringUtil } from '../util/StringUtil';
+import { AmazonAsinStore } from './AmazonAsinStore';
 
 export class BarcodeMapper {
   static saveBarcode(barcode) {
@@ -13,14 +14,21 @@ export class BarcodeMapper {
     barcodes.forEach((barcode) => this.saveBarcode(barcode));
   }
 
-  static getBarcode(id) {
-    let asin = Store.getSingle(this.getBarcodeSchema().name, 'id = "' + id + '"');
-    return this.cloneAndParseAsin(asin);
+  static getBarcode(barcode) {
+    console.log(this.getAllBarcodes());
+    console.log(barcode);
+    let asin = Store.getSingle(this.getBarcodeSchema().name, 'barcode = "' + barcode + '"');
+    console.log(asin);
+    return this.cloneAndParseBarcode(asin);
   }
 
+  static getAsinFromBarcode(barcode) {
+    let barcodeDetails = this.getBarcode(barcode);
+    return AmazonAsinStore.getAsin(barcodeDetails.asin);
+  }
   static getAllBarcodes() {
     let barcodes = Store.getAll(this.getBarcodeSchema().name);
-    return barcodes.map(barcode => this.cloneAndParseAsin(barcode));
+    return barcodes.map(barcode => this.cloneAndParseBarcode(barcode));
   }
 
   static deleteAllBarcodes() {

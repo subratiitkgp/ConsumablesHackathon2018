@@ -18,8 +18,10 @@ export class DataInitializer {
         AmazonAsinStore.saveAllAsins(amazonAsins); 
 
         const barcodelist = BarcodeList;
+        // console.log(barcodelist);
         BarcodeMapper.deleteAllBarcodes();
         BarcodeMapper.saveAllBarcodes(barcodelist);
+        console.log(BarcodeMapper.getAllBarcodes());
 
         const customerList = CustomerList;
         CustomerStore.deleteAllCustomers();
