@@ -103,9 +103,9 @@ export class AmazonKitchenScanner extends Component {
     return (
       <View style={{flexDirection: 'row', width: '97%', borderWidth: 1, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
         <Image source={{uri: asin.imageURL}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
-        <TouchableWithoutFeedback onPress={() => this.onPlusClick()}>
+        <TouchableWithoutFeedback onPress={() => this.onDetailPage()}>
           <View>
-            <Text style={{fontSize: 20}}>{asin.title}</Text>
+            <Text style={{fontSize: 10}}>{asin.title}</Text>
           </View>
         </TouchableWithoutFeedback>
         <QuantitySlider onQuantityChange={(quantity) => this.onQuantityChange(asin, quantity)}/>
@@ -117,7 +117,7 @@ export class AmazonKitchenScanner extends Component {
     this.asinQuantity[asin.asin] = quantity;
   }
 
-  onPlusClick() {
+  onDetailPage() {
     return
   }
 
@@ -135,7 +135,7 @@ export class AmazonKitchenScanner extends Component {
               const endTime = new Date();
               const timeDiff = (endTime - this.startTime) / 1000;
               Alert.alert("Congrats", "You have shopped for " + this.state.asins.length + " item(s) in " + timeDiff + " seconds",
-                          [{text: "OK", onPress: () => this.onPlusClick()}]
+                          [{text: "OK", onPress: () => this.onDetailPage()}]
                           );
               }}
           />

@@ -15,10 +15,7 @@ export class BarcodeMapper {
   }
 
   static getBarcode(barcode) {
-    console.log(this.getAllBarcodes());
-    console.log(barcode);
     let asin = Store.getSingle(this.getBarcodeSchema().name, 'barcode = "' + barcode + '"');
-    console.log(asin);
     return this.cloneAndParseBarcode(asin);
   }
 

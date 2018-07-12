@@ -2,28 +2,28 @@
 
 export const BarcodeList = [
     {
-        barcode:"ext1",
+        barcode:"int1",
         asin:"B01CJVVLUA",
         quantity:1,
         customerIdList:[1],
         barcodeType:"small"
     },
     {
-        barcode:"ext2",
+        barcode:"int2",
         asin:"B07229HGVC",
         quantity:1,
         customerIdList:[2],
         barcodeType:"medium"
     },
     {
-        barcode:"ext3",
+        barcode:"int3",
         asin:"B07229HGVC",
         quantity:2,
         customerIdList:[3],
         barcodeType:"medium"
     },
     {
-        barcode:"ext4",
+        barcode:"int4",
         asin:"B01CHURRJM",
         quantity:1,
         customerIdList:[3],
