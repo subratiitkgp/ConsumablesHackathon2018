@@ -17,7 +17,7 @@ export const BarcodeList = [
     },
     {
         barcode:"int3",
-        asin:"B07229HGVC",
+        asin:"B01N5LENPM",
         quantity:2,
         customerIdList:[3],
         barcodeType:"medium"

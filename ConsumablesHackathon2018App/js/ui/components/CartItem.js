@@ -57,7 +57,6 @@ export class CartItem extends Component {
 
     let newCartItem = StringUtil.cloneObject(cartItem);
     newCartItem.asin = newAsin.asin;
-
     CartStore.saveCartItem(newCartItem);
 
     if (this.props.onGrammageChange != undefined) {
