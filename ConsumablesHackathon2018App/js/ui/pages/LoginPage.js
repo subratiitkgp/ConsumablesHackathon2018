@@ -26,7 +26,6 @@ export class LoginPage extends Component {
       CartStore.getCartSchema()
     ]);
     const asins = AsinStore.getAllAsins();
-    console.log(asins);
   }
 
   resetData() {
@@ -47,7 +46,7 @@ export class LoginPage extends Component {
         />
         <Button
           title="Customer 3"
-          onPress={() => this.props.navigation.navigate("CompareAndSavePage")}
+          onPress={() => this.props.navigation.navigate("CartPage")}
         />
         <Button
           title="Reset Data"

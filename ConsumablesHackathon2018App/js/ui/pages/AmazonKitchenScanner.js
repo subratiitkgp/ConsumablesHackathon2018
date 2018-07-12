@@ -91,7 +91,7 @@ export class AmazonKitchenScanner extends Component {
         <FlatList
           removeClippedSubviews={true}
           data={this.state.cartItems.reverse()}
-          keyExtractor={(asin) => asin.key}
+          keyExtractor={(asin) => asin.asin}
           initialNumToRender={3}
           renderItem={(cartItems) => this.renderAsin(cartItems.item, cartItems.index)}
         />
@@ -128,6 +128,8 @@ export class AmazonKitchenScanner extends Component {
           <Button
               title="Checkout"
               onPress={() => {
+                this.props.navigation.navigate("CartPage")
+                /*
               if (this.state.asins.length == 0) {
                   Alert.alert("Warning", "Please add few products to checkout");
                   return;
@@ -135,8 +137,9 @@ export class AmazonKitchenScanner extends Component {
               const endTime = new Date();
               const timeDiff = (endTime - this.startTime) / 1000;
               Alert.alert("Congrats", "You have shopped for " + this.state.asins.length + " item(s) in " + timeDiff + " seconds",
-                          [{text: "OK", onPress: () => this.onDetailPage()}]
+                          [{text: "OK", onPress: () => this.props.navigation.navigate("CartPage")}]
                           );
+                          */
               }}
           />
           </View>

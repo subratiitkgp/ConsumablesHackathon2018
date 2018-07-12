@@ -19,8 +19,18 @@ export class CartPage extends Component {
       <View style={{flex: 1}}>
         {this.renderPageHeader()}
         {this.renderCartItems()}
+        {this.renderFooter()}
       </View>
     )
+  }
+
+  renderFooter() {
+    return (
+      <Button
+        title="Submit"
+        onPress={() => this.props.navigation.navigate("ModifySticker")}
+      />
+    );
   }
 
   renderPageHeader() {
