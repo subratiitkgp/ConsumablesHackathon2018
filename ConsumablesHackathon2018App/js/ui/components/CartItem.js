@@ -1,9 +1,12 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Alert, View, Button, FlatList, Text, Image, Picker, Switch } from 'react-native';
+import { Alert, View, Button, FlatList, Text, Image, Picker, Switch, TouchableWithoutFeedback } from 'react-native';
 import {QuantitySlider} from './QuantitySlider';
 import {GrammageSelector} from './GrammageSelector';
+import {AmazonAsinStore} from '../../data/AmazonAsinStore';
+import {StringUtil} from '../../util/StringUtil';
+import {CartStore} from '../../data/CartStore';
 
 export class CartItem extends Component {
   constructor(props) {
@@ -22,20 +25,55 @@ export class CartItem extends Component {
     }
   }
 
+  onItemClick(asin, cartItem) {
+    if (this.props.onItemClick != undefined) {
+      this.props.onItemClick(cartItem);
+    }
+  }
+
+  onQuantityChange(asin, cartItem, quantity) {
+    if (quantity <= 0) {
+      CartStore.deleteCartItem(cartItem.cartItemId);
+    } else {
+      const newCartItem = StringUtil.cloneObject(cartItem);
+      cartItem.quantity = quantity;
+      CartStore.saveCartItem(cartItem);
+    }
+  }
+
   render() {
-    const imageUri = "https://images-eu.ssl-images-amazon.com/images/I/512D8AJfEGL._SS125_.jpg";
+    const cartItem = this.props.cartItem;
+    const asin = AmazonAsinStore.getAsin(cartItem.asin);
     return (
-      <View>
-        <View style={{width: "95%", flexDirection: 'row', alignItems: 'center', margin: 5}}>
-          <Image source={{uri: imageUri}} style={{width: 50 , height: 50, margin: 2}} />
-          <Text style={{fontSize: 20}}>ASIN TITLE</Text>
-        </View>
-        <View style={{width: "95%", flexDirection: 'row', alignItems: "center", margin: 5}}>
-          <QuantitySlider />
-          <GrammageSelector defaultGrammage="10" grammageValues={["10", "20"]} />
-          <Text>Need Sticker</Text>
-          <Switch value={this.state.needSticker} onValueChange={(value) => this.onStickerValueChange(value)}/>
-        </View>
+      <View style={{flex: 1, width: "97%", borderWidth: 1, margin: 5}}>
+        {this.renderFirstRow(asin, cartItem)}
+        {
+          this.props.renderSecondRow === true ? this.renderSecondRow(asin, cartItem) : null
+        }
+      </View>
+    )
+  }
+
+  renderFirstRow(asin, cartItem) {
+    return (
+      <View style={{flexDirection: 'row', width: '97%', alignItems: 'center', justifyContent: "space-between"}}>
+        <TouchableWithoutFeedback onPress={() => this.onItemClick(asin, cartItem)}>
+          <View style={{flexDirection: 'row', width: 280, alignItems: 'center'}}>
+            <Image source={{uri: asin.imageURL}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
+            <Text style={{fontSize: 15}}>{asin.title}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <QuantitySlider defaultQuantity={cartItem.quantity} onQuantityChange={(quantity) => this.onQuantityChange(asin, cartItem, quantity)}/>
+      </View>
+    )
+  }
+
+  renderSecondRow(asin, cartItem) {
+    return (
+      <View style={{flexDirection: 'row', width: "97%", alignItems: 'center', justifyContent: 'space-evenly'}}>
+        <GrammageSelector defaultGrammage="10" grammageValues={["10", "20"]} />
+        <Text>Need Sticker</Text>
+        <Switch value={this.state.needSticker} onValueChange={(value) => this.onStickerValueChange(value)}/>
       </View>
     )
   }

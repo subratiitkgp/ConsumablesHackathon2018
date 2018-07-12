@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Alert, View, Button, FlatList, Text, Image } from 'react-native';
+import {CartStore} from '../../data/CartStore';
 import {CartItem} from '../components/CartItem';
 
 export class CartPage extends Component {
@@ -23,13 +24,27 @@ export class CartPage extends Component {
   }
 
   renderPageHeader() {
-    return undefined;
+    return null;
+  }
+
+  renderCartItem(cartItem, index) {
+    return (
+      <CartItem cartItem={cartItem} renderSecondRow={true} />
+    );
   }
 
   renderCartItems() {
+    const cartItems = CartStore.getAllCartItems();
+    if (cartItems === undefined) return null;
     return (
       <View>
-        <CartItem />
+        <FlatList
+          removeClippedSubviews={true}
+          data={cartItems}
+          keyExtractor={(cartItem) => cartItem.cartItemId.toString()}
+          initialNumToRender={3}
+          renderItem={(cartItem) => this.renderCartItem(cartItem.item, cartItem.index)}
+        />
       </View>
     )
   }

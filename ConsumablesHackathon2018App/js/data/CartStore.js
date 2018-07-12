@@ -23,6 +23,10 @@ export class CartStore {
     return ids.map(id => this.cloneAndParseCartItem(id));
   }
 
+  static deleteCartItem(cartItemId) {
+    Store.delete(this.getCartSchema().name, 'cartItemId = "' + cartItemId + '"');
+  }
+
   static deleteAllCartItems() {
     Store.deleteAll(this.getCartSchema().name);
   }

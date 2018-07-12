@@ -35,9 +35,18 @@ export class Store {
     realm.write(() => realm.create(entity, value, true));
   }
 
+  static delete(entity, filter) {
+    realm.write(() => {
+      const objects = realm.objects(entity).filtered(filter);
+      if (objects === undefined || objects.length == 0) return;
+      realm.delete(objects);
+    })
+  }
+
   static deleteAll(entity) {
     realm.write(() => {
       const allObjects = realm.objects(entity);
+      if (allObjects === undefined || allObjects.length == 0) return;
       realm.delete(allObjects);
     });
   }
