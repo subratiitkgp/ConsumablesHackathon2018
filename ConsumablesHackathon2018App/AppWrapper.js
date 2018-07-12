@@ -10,11 +10,14 @@ import { LoginPage } from './js/ui/pages/LoginPage';
 import {CartPage} from './js/ui/pages/CartPage';
 import {CompareAndSavePage} from './js/ui/pages/CompareAndSavePage'
 import { AmazonKitchenScanner } from './js/ui/pages/AmazonKitchenScanner';
+import { ModifySticker } from './js/ui/pages/ModifySticker';
 
 const AppWrapper = createStackNavigator({
   HomePage: { screen: LoginPage },
   CompareAndSavePage: { screen: CompareAndSavePage },
-  AmazonKitchenScanner: { screen: AmazonKitchenScanner}
+  AmazonKitchenScanner: { screen: AmazonKitchenScanner },
+  CartPage: { screen: CartPage },
+  ModifySticker: { screen: ModifySticker }
 });
 
 let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME, installMode: codePush.InstallMode.IMMEDIATE };
