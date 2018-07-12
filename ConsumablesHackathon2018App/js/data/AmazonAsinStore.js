@@ -18,6 +18,22 @@ export class AmazonAsinStore {
     return this.cloneAndParseAsin(asin);
   }
 
+  static getAsinFromExternalBarcode(externalBarcode) {
+    let asin = Store.getSingle(this.getAsinSchema().name, 'externalBarcode = "' + externalBarcode + '"');
+    return this.cloneAndParseAsin(asin);
+  }
+
+  static getVariationsForVarationGroup(variationgroup) {
+    const asins = this.getAsinsForVariationGroup(variationgroup);
+    const variations = asins.map((asin, index) => asin.variation);
+  }
+
+  static getAsinsForVariationGroup(variationgroup) {
+    let asins = Store.get(this.getAsinSchema().name, 'variationgroup = "' + variationgroup + '"');
+    console.log(asins);
+    return asins.map(asin => this.cloneAndParseAsin(asin));
+  }
+
   static getAllAsins() {
     let asins = Store.getAll(this.getAsinSchema().name);
     return asins.map(asin => this.cloneAndParseAsin(asin));
