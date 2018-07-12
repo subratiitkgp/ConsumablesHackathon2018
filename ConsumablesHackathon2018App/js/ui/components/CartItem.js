@@ -39,6 +39,30 @@ export class CartItem extends Component {
       cartItem.quantity = quantity;
       CartStore.saveCartItem(cartItem);
     }
+
+    if (this.props.onQuantityChange != undefined) {
+      this.props.onQuantityChange(newCartItem);
+    }
+  }
+
+  onGrammageChange(asin, cartItem, variation) {
+    const asinVariations = AmazonAsinStore.getAsinsForVariationGroup(asin.variationgroup);
+    let newAsin = asin;
+    for (let i = 0; i < asinVariations.length; ++i) {
+      if (asinVariations[i].variation === variation) {
+        newAsin = asinVariations[i];
+        break;
+      }
+    }
+
+    let newCartItem = StringUtil.cloneObject(cartItem);
+    newCartItem.asin = newAsin.asin;
+
+    CartStore.saveCartItem(newCartItem);
+
+    if (this.props.onGrammageChange != undefined) {
+      this.props.onGrammageChange(newCartItem);
+    }
   }
 
   render() {
@@ -69,9 +93,11 @@ export class CartItem extends Component {
   }
 
   renderSecondRow(asin, cartItem) {
+    const grammageValues = AmazonAsinStore.getVariationsForVarationGroup(asin.variationgroup);
     return (
-      <View style={{flexDirection: 'row', width: "97%", alignItems: 'center', justifyContent: 'space-evenly'}}>
-        <GrammageSelector defaultGrammage="10" grammageValues={["10", "20"]} />
+      <View style={{flexDirection: 'row', width: "97%", alignItems: 'center', justifyContent: 'space-between'}}>
+        <GrammageSelector onValueChange={(variation) => this.onGrammageChange(asin, cartItem, variation)}
+                                         defaultGrammage={asin.variation} grammageValues={grammageValues} />
         <Text>Need Sticker</Text>
         <Switch value={this.state.needSticker} onValueChange={(value) => this.onStickerValueChange(value)}/>
       </View>
