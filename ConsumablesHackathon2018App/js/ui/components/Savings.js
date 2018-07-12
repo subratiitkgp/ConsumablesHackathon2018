@@ -36,8 +36,8 @@ export class Savings extends Component {
         const savings = this.computeSavings();
         return (
           <View style={{margin:5, flexDirection: 'row'}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Total Savings: </Text>
-          <Text style={{fontSize: 20, color: 'red'}}>₹{savings}</Text>             
+          <Text style={{fontSize: 15, fontWeight: 'bold'}}>Savings: </Text>
+          <Text style={{fontSize: 15, color: 'red'}}>₹{savings}</Text>             
       </View>
         )
       }

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Button, FlatList, Text, Image, ToastAndroid, TouchableWithoutFeedback, Alert } from 'react-native';
+import { View, Button, FlatList, Text, Image, ToastAndroid, TouchableWithoutFeedback, Alert, Modal } from 'react-native';
 import { Store } from '../../data/Store';
 import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
@@ -10,6 +10,7 @@ import { BarcodeMapper } from '../../data/BarcodeMapper';
 import { CartStore } from '../../data/CartStore';
 import {CartItem} from '../components/CartItem';
 import { CompareAndSaveDP } from '../components/CompareAndSaveDP';
+import { Savings } from '../components/Savings';
 //import {Footer} from '../components/Footer';
 
 export class AmazonKitchenScanner extends Component {
@@ -19,12 +20,11 @@ export class AmazonKitchenScanner extends Component {
 
   constructor(props) {
     super(props);
-    const cartItems = CartStore.getAllCartItems();
     this.state = { 
-      cartItems,
       totalSaving: 0,
-    };
-    this.asinQuantity = {
+      dpModalVisible: false,
+      currentCartItemForDp: undefined,
+      cartItems: CartStore.getAllCartItems()
     };
     this.scanProcessing = 0;
     this.startTime = new Date();
@@ -33,10 +33,11 @@ export class AmazonKitchenScanner extends Component {
 
   addAsinToCart(scannedAsin, barcode) {
     let size = CartStore.getAllCartItems().length;
+    const barcodeDetails = BarcodeMapper.getBarcode(barcode);
     const cartItem = {
       cartItemId: size + 1,
       asin: scannedAsin.asin,
-      quantity: this.asinQuantity[scannedAsin.asin] === undefined ? 1 : this.asinQuantity[scannedAsin.asin],
+      quantity: barcodeDetails.quantity,
       customerId: this.customerID, 
       fromBarcode: barcode,
       source: "Internal",
@@ -44,7 +45,8 @@ export class AmazonKitchenScanner extends Component {
       externalPrice: 0
     }
     CartStore.saveCartItem(cartItem);
-    this.setState({cartItems: CartStore.getAllCartItems()});
+    this.setState({cartItems: CartStore.getAllCartItems()})
+    this.forceUpdate();
   }
 
   render() {
@@ -54,6 +56,7 @@ export class AmazonKitchenScanner extends Component {
         {this.renderCamera()}
         {this.renderAsinList()}
         {this.renderFooter()}
+        {this.renderDpModal(this.state.currentCartItemForDp)}
       </View>
     )
   }
@@ -78,6 +81,25 @@ export class AmazonKitchenScanner extends Component {
     this.scanProcessing = 1;
     let barcode = data.data;
     const scannedAsin = BarcodeMapper.getAsinFromBarcode(barcode);
+    const cartItems = this.state.cartItems;
+
+    const alreadyInCart = cartItems.filter(cartItem => {
+      const cartAsin = AmazonAsinStore.getAsin(cartItem.asin);
+      if (cartAsin.asin === scannedAsin.asin || 
+          cartAsin.variationgroup === scannedAsin.variationgroup) {
+          return true;
+      }
+    });
+
+    if (alreadyInCart != undefined && alreadyInCart.length > 0) {
+      Alert.alert("Already Added", "Already added",
+      [{text: 'Ok', onPress: () => {
+        setTimeout(() => this.scanProcessing = 0, 1500);
+        }}
+      ]);
+      return;
+    }
+
     this.addAsinToCart(scannedAsin, barcode);
     ToastAndroid.showWithGravity(
       'Added To Cart',
@@ -88,12 +110,14 @@ export class AmazonKitchenScanner extends Component {
   }
 
   renderAsinList() {
+    const cartItems = this.state.cartItems;
     return (
         <FlatList
           removeClippedSubviews={true}
-          data={this.state.cartItems.reverse()}
+          data={cartItems}
           keyExtractor={(asin) => asin.asin}
           initialNumToRender={3}
+          extraData={this.state}
           renderItem={(cartItems) => this.renderCartItem(cartItems.item, cartItems.index)}
         />
     )
@@ -109,42 +133,72 @@ export class AmazonKitchenScanner extends Component {
     );
   }
 
-  onQuantityChange(asin, quantity) {
-    this.asinQuantity[asin.asin] = quantity;
+  onQuantityChange(cartItem) {
+    this.setState({cartItems: CartStore.getAllCartItems()});
+    this.forceUpdate();
   }
 
   onDetailPage(cartItem) {
-    <CompareAndSaveDP asin={cartItem.asin} navigation={this.props.navigation}/>
+    this.setState({currentCartItemForDp: cartItem, dpModalVisible: true});
   }
 
   renderFooter() {
     return (
-      <View style={{margin: 5, width: '97%', flexDirection: 'row', borderWidth: 1}}>
+      <View style={{margin: 5, width: '97%', flexDirection: 'row', borderWidth: 1, justifyContent: 'space-between'}}>
           <View style={{margin: 5}}>
           <Button
               title="Checkout"
               onPress={() => {
                 this.props.navigation.navigate("CartPage")
-                /*
-              if (this.state.asins.length == 0) {
-                  Alert.alert("Warning", "Please add few products to checkout");
-                  return;
-              }
-              const endTime = new Date();
-              const timeDiff = (endTime - this.startTime) / 1000;
-              Alert.alert("Congrats", "You have shopped for " + this.state.asins.length + " item(s) in " + timeDiff + " seconds",
-                          [{text: "OK", onPress: () => this.props.navigation.navigate("CartPage")}]
-                          );
-                          */
               }}
           />
           </View>
+          <View style={{margin: 5}}>
+          <Button
+              title="Refresh"
+              onPress={() => this.forceUpdate()}
+          />
+          </View>
+
+          <View style={{margin: 5}}>
+          <Savings />
+          </View>
+      </View>
+    );
+  }
+
+  renderDpModal(currentCartItemForDp) {
+    if (currentCartItemForDp === undefined) return null;
+    const asin = AmazonAsinStore.getAsin(currentCartItemForDp.asin);
+
+    return (
+      <View style={{flex: 1}}>
+        <Modal
+            transparent={false}
+            visible={this.state.dpModalVisible}
+            onRequestClose={() => {
+              this.setState({cartItems: CartStore.getAllCartItems(), dpModalVisible: false});
+              this.forceUpdate();
+              console.log("Refresing page");
+            }}>
+            <CompareAndSaveDP pageMode={"Internal"} cartItem={currentCartItemForDp} asin={asin} 
+                    navigation={this.props.navigation}
+                    onQuantityChange={(cartItem) => this.onQuantityChange(cartItem)}
+                    />
+        </Modal>  
+      </View>
+    );
+  }
+}
+
+/*
+            <CompareAndSaveDP pageMode={"Internal"} cartItem={currentCartItemForDp} asin={asin} 
+                                navigation={this.props.navigation}
+                                onQuantityChange={(cartItem) => this.onQuantityChange(cartItem)}
+                                />
 
           <View style={{margin:5, flexDirection: 'row'}}>
               <Text style={{fontSize: 20, fontWeight: 'bold'}}>Total Saving: </Text>
               <Text style={{fontSize: 20, color: 'red'}}>₹{this.state.totalSaving.toFixed(2)}</Text>             
           </View>
-      </View>
-    );
-  }
-}
+          */

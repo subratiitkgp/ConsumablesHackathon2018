@@ -32,12 +32,12 @@ export class CartItem extends Component {
   }
 
   onQuantityChange(asin, cartItem, quantity) {
+    const newCartItem = StringUtil.cloneObject(cartItem);
     if (quantity <= 0) {
       CartStore.deleteCartItem(cartItem.cartItemId);
     } else {
-      const newCartItem = StringUtil.cloneObject(cartItem);
-      cartItem.quantity = quantity;
-      CartStore.saveCartItem(cartItem);
+      newCartItem.quantity = quantity;
+      CartStore.saveCartItem(newCartItem);
     }
 
     if (this.props.onQuantityChange != undefined) {

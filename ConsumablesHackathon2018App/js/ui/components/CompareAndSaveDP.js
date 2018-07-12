@@ -7,6 +7,8 @@ import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
 import {QuantitySlider} from './QuantitySlider';
 import {GrammageSelector} from './GrammageSelector';
+import {StringUtil} from '../../util/StringUtil';
+import {CartStore} from '../../data/CartStore';
 
 export class CompareAndSaveDP extends Component {
 
@@ -90,7 +92,7 @@ export class CompareAndSaveDP extends Component {
         <TextInput
           style={{fontSize: 15}}
           onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
+          value={this.state.text.toString()}
         />
       </View>
     )
@@ -106,9 +108,16 @@ export class CompareAndSaveDP extends Component {
   }
 
   renderATCButton() {
+    let defaultQuantity = 1;
+    if (this.props.pageMode === "Internal") {
+      const cartItem = this.props.cartItem;
+      defaultQuantity = cartItem.quantity;
+    }
+
     return (
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-        <QuantitySlider onQuantityChange={this.onQuantityChange.bind(this)}/>
+        <QuantitySlider defaultQuantity={defaultQuantity} 
+                        onQuantityChange={(quantity) => this.onQuantityChange(this.props.cartItem, quantity)}/>
         <View style={{marginLeft: 5}}>
           <Button
             title="OK"
@@ -144,7 +153,18 @@ export class CompareAndSaveDP extends Component {
     return;
   }
 
-  onQuantityChange(quantity) {
+  onQuantityChange(cartItem, quantity) {
     this.state.quantity = quantity;
+    const newCartItem = StringUtil.cloneObject(cartItem);
+    if (quantity <= 0) {
+      CartStore.deleteCartItem(cartItem.cartItemId);
+    } else {
+      newCartItem.quantity = quantity;
+      CartStore.saveCartItem(newCartItem);
+    }
+
+    if (this.props.onQuantityChange != undefined) {
+      this.props.onQuantityChange(newCartItem);
+    }
   }
 }

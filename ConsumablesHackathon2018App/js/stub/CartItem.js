@@ -1,4 +1,4 @@
-export const CartItemList = [
+const CartItemList1 = [
     {
         cartItemId: 1,
         asin:"B01CJVVLUA",
@@ -29,4 +29,6 @@ export const CartItemList = [
         appliedOffer: "23453",
         externalPrice: 0.0,
     },
-]        
+]
+
+export const CartItemList = [];
