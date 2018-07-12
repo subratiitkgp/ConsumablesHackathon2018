@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Alert, View, Button, FlatList, Text, Image } from 'react-native';
 import { Store } from '../../data/Store';
-import { AsinStore } from '../../data/AsinStore';
+import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
 import { CompareAndSaveDP } from '../components/CompareAndSaveDP';
 
@@ -14,12 +14,12 @@ export class CompareAndSavePage extends Component {
 
   constructor(props) {
     super(props);
-    Store.init([AsinStore.getAsinSchema()]);
-    const asins = AsinStore.getAllAsins();
+    const asins = AmazonAsinStore.getAllAsins();
     this.state = { 
       asins,
       displayMode: "asinlist",
-      totalSaving: 0
+      totalSaving: 0,
+      scannedAsin: ""
     };
     this.asinCount = asins.length + 1;
     this.scanProcessing = 0;
@@ -29,7 +29,8 @@ export class CompareAndSavePage extends Component {
   onBarCodeRead(data, type) {
     if (this.scanProcessing === 1) return;
     this.scanProcessing = 1;
-    this.setState({displayMode: "asinDetail"});
+    const scannedAsin = AmazonAsinStore.getAsinFromExternalBarcode(data.data);
+    this.setState({displayMode: "asinDetail", scannedAsin});
   }
 
   render() {
@@ -94,7 +95,7 @@ export class CompareAndSavePage extends Component {
   renderCartOrDp() {
     if (this.state.displayMode === "asinDetail") {
       return (
-        <CompareAndSaveDP navigation={this.props.navigation} onBack={() => this.onDpBackPress()}/>
+        <CompareAndSaveDP asin={this.state.scannedAsin} navigation={this.props.navigation} onBack={() => this.onDpBackPress()}/>
       )
     } else {
       return this.renderAsinList();

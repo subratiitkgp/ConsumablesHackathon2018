@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Alert, View, Button, FlatList, Text, Image, TextInput } from 'react-native';
 import { Store } from '../../data/Store';
-import { AsinStore } from '../../data/AsinStore';
+import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
 import {QuantitySlider} from './QuantitySlider';
 import {GrammageSelector} from './GrammageSelector';
@@ -12,19 +12,17 @@ export class CompareAndSaveDP extends Component {
 
   constructor(props) {
     super(props);
-    Store.init([AsinStore.getAsinSchema()]);
-    const asins = AsinStore.getAllAsins();
-    this.state = { asins };
+    const asin = this.props.asin;
 
-    this.asinName = "Madhur Sugar";
-    this.imageUri = "https://images-eu.ssl-images-amazon.com/images/I/51Kt7nFLqEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg";
-    this.ourPrice = 399;
+    this.asinName = asin.title;
+    this.imageUri = asin.imageURL;
+    this.ourPrice = asin.price;
     this.defaultGrammage = "10";
     this.grammageValues = ["10", "20"];
 
     this.offer1Price = this.ourPrice * 0.9;
     this.offer2Price = this.ourPrice * 0.85;
-    this.state = { text:  this.ourPrice.toString()};
+    this.state = { text:  this.ourPrice.toString(), quantity: 0};
   }
 
   render() {
@@ -109,13 +107,13 @@ export class CompareAndSaveDP extends Component {
   renderATCButton() {
     return (
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-        <QuantitySlider />
+        <QuantitySlider onQuantityChange={this.onQuantityChange.bind(this)}/>
         <View style={{marginLeft: 5}}>
-        <Button
-          title="OK"
-          onPress={() => this.confirm()}
-        />
-      </View>
+          <Button
+            title="OK"
+            onPress={() => this.confirm()}
+          />
+        </View>
       </View>
     )
   }
@@ -143,5 +141,9 @@ export class CompareAndSaveDP extends Component {
   confirm() {
     this.props.onBack();
     return;
+  }
+
+  onQuantityChange(quantity) {
+    this.state.quantity = quantity;
   }
 }

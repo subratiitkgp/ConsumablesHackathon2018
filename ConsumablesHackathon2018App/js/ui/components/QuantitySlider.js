@@ -34,14 +34,14 @@ export class QuantitySlider extends Component {
       <View style={{width: 100, height: 30,
                     flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
           
-        <TouchableWithoutFeedback onPress={() => this.onPlusClick()}>
-          <Image source={require(plusImageSource)} style={{width: 30 , height: 30}} />
+        <TouchableWithoutFeedback onPress={() => this.onMinusClick()}>
+          <Image source={require(minusImageSource)} style={{width: 30 , height: 30}} />
         </TouchableWithoutFeedback>
         <View style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{fontSize: 20}}>{this.state.quantity}</Text>
         </View>
-        <TouchableWithoutFeedback onPress={() => this.onMinusClick()}>
-          <Image source={require(minusImageSource)} style={{width: 30 , height: 30}} />
+        <TouchableWithoutFeedback onPress={() => this.onPlusClick()}>
+          <Image source={require(plusImageSource)} style={{width: 30 , height: 30}} />
         </TouchableWithoutFeedback>
       </View>
     )
