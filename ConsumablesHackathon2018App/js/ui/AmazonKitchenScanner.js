@@ -1,11 +1,12 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Button, FlatList, Text, Image, ToastAndroid } from 'react-native';
+import { View, Button, FlatList, Text, Image, ToastAndroid, TouchableWithoutFeedback } from 'react-native';
 import { Store } from '../data/Store';
 import { AsinStore } from '../data/AsinStore';
 import { RNCamera } from 'react-native-camera';
 import {LogoTitle} from './LogoTitle';
+import {QuantitySlider} from './components/QuantitySlider';
 
 export class AmazonKitchenScanner extends Component {
   static navigationOptions = {
@@ -111,13 +112,15 @@ export class AmazonKitchenScanner extends Component {
     return (
       <View style={{flexDirection: 'row', width: '97%', borderWidth: 1, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
         <Image source={{uri: imageUri}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
-        <Text style={{fontSize: 20, marginRight: 125}}>{asin.id}</Text>
-        <View style={{margin: 5}}>
-          <Button
-            title="Modify"
-          />
-        </View>
+        <TouchableWithoutFeedback onPress={() => this.onPlusClick()}>
+          <Text style={{fontSize: 20, marginRight: 120}}>{asin.id}</Text>
+        </TouchableWithoutFeedback>
+        <QuantitySlider />
       </View>
     )
+  }
+
+  onPlusClick() {
+    return
   }
 }
