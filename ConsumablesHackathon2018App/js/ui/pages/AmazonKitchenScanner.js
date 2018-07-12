@@ -6,10 +6,10 @@ import { Store } from '../../data/Store';
 import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
 import {LogoTitle} from '../components/LogoTitle';
-import {QuantitySlider} from '../components/QuantitySlider';
 import { BarcodeMapper } from '../../data/BarcodeMapper';
 import { CartStore } from '../../data/CartStore';
 import {CartItem} from '../components/CartItem';
+import { CompareAndSaveDP } from '../components/CompareAndSaveDP';
 //import {Footer} from '../components/Footer';
 
 export class AmazonKitchenScanner extends Component {
@@ -99,28 +99,13 @@ export class AmazonKitchenScanner extends Component {
     )
   }
 
-  renderAsin(cartItem, index) {
-    let asin = AmazonAsinStore.getAsin(cartItem.asin);
-    return (
-      <View style={{flexDirection: 'row', width: '97%', borderWidth: 1, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
-        <View style={{width: 30, marginRight: 20}}>
-          <Image source={{uri: asin.imageURL}} style={{width: '100%', height: 40, margin: 5}} />
-        </View>
-        <TouchableWithoutFeedback onPress={() => this.onDetailPage()}>
-          <View style={{width: 195}}>
-            <Text style={{fontSize: 20}}>{asin.title}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-          <View style={{width: 40}}>
-            <QuantitySlider onQuantityChange={(quantity) => this.onQuantityChange(asin, quantity)}/>
-          </View>
-      </View>
-    )
-  }
-
   renderCartItem(cartItem, index) {
     return (
-      <CartItem cartItem={cartItem} renderSecondRow={false} />
+      <CartItem cartItem={cartItem} renderSecondRow={false} 
+      //onBack={() => this.onQuantityChange(cartItem.asin, cartItem.quantity)}
+      onQuantityChange={(cartItem) => this.onQuantityChange(cartItem.asin, cartItem.quantity)}
+      onItemClick={(cartItem) => this.onDetailPage(cartItem)}
+      />
     );
   }
 
@@ -128,8 +113,8 @@ export class AmazonKitchenScanner extends Component {
     this.asinQuantity[asin.asin] = quantity;
   }
 
-  onDetailPage() {
-    return
+  onDetailPage(cartItem) {
+    <CompareAndSaveDP asin={cartItem.asin} navigation={this.props.navigation}/>
   }
 
   renderFooter() {
