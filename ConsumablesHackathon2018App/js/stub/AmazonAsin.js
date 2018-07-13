@@ -10,7 +10,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "SurfExcel",
         variation:"2 kg",
-        externalBarcode: "8901030556807"
+        externalBarcode: "int1"
     },
     {
         asin:"B01CJVVUY2",
@@ -23,7 +23,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "SurfExcel",
         variation:"1 kg",
-        externalBarcode: "ext2"
+        externalBarcode: "ext1"
     },
     {
         asin:"B01N5LENPM",
@@ -36,7 +36,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Ariel",
         variation:"2 kg",
-        externalBarcode: "ext3"
+        externalBarcode: "ext2"
     },
     {
         asin:"B07229HGVC",
@@ -49,7 +49,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Ariel",
         variation:"6 kg",
-        externalBarcode: "ext4"
+        externalBarcode: "ext3"
     },
     {
         asin:"B01CHUR9RM",
@@ -62,7 +62,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "bourbon",
         variation:"120 g",
-        externalBarcode: "100745155"
+        externalBarcode: "B00BFY2ERM"
 
     },
     {
@@ -76,7 +76,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "goodday",
         variation:"200 g",
-        externalBarcode: "ext6"
+        externalBarcode: "ext4"
     },
     {
         asin:"B01M66ZABE",
@@ -89,7 +89,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "goodday",
         variation:"100 g",
-        externalBarcode: "ext7"
+        externalBarcode: "ext5"
     },
     {
         asin:"B01CHUSV38",
@@ -102,7 +102,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "mom",
         variation:"200 g",
-        externalBarcode: "ext7"
+        externalBarcode: "ext6"
     },
     {
         asin:"B01GCEGCP4",
@@ -115,7 +115,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "madhur",
         variation:"1 kg",
-        externalBarcode: "ext8"
+        externalBarcode: "ext7"
     },
     {
         asin:"B01GCF0XEY",
@@ -128,7 +128,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "madhur",
         variation:"5 kg",
-        externalBarcode: "ext9"
+        externalBarcode: "ext8"
     },
     {
         asin:"B01HBEUTGM",
@@ -180,7 +180,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Ezee",
         variation:"500 g",
-        externalBarcode: "8901023005817"
+        externalBarcode: "int5"
     },
     {
         asin:"B01GCFBG3G",
@@ -193,7 +193,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Aashirvaad",
         variation:"10 kg",
-        externalBarcode: "B01GCFBG3G"
+        externalBarcode: "int6"
     },
     {
         asin:"B01GCDVOTE",
@@ -206,7 +206,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Aashirvaad",
         variation:"5 kg",
-        externalBarcode: "B01GCDVOTE"
+        externalBarcode: "int7"
     }
     
 ]
