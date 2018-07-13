@@ -20,6 +20,7 @@ export class CompareAndSaveDP extends Component {
       customerPrice: this.props.asin.price
     }
     this.ourPrice = this.state.asin.price;
+    this.listPrice = this.state.asin.actualprice;
     this.offer1Price = this.ourPrice * 0.9;
     this.offer2Price = this.ourPrice * 0.85;
   }
@@ -85,6 +86,14 @@ export class CompareAndSaveDP extends Component {
   }
 
   renderYourPrice() {
+    if (this.props.pageMode === "Internal") {
+      return (
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={{fontSize: 15, fontWeight: 'bold'}}>List Price: </Text>
+        <Text style={{fontSize: 15, color: 'red'}}> ₹{this.listPrice} </Text>
+      </View>
+      )
+    } else {
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Text style={{fontSize: 15, fontWeight: 'bold'}}>Your Price: </Text>
@@ -98,6 +107,7 @@ export class CompareAndSaveDP extends Component {
         />
       </View>
     )
+  }
   }
 
   renderPicker() {
@@ -139,12 +149,12 @@ export class CompareAndSaveDP extends Component {
         <Text style={{fontSize: 15, fontWeight: 'bold'}}>Offers: </Text>
 
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 15}}>1. Effective Price on Cart >= 1000: </Text>
+          <Text style={{fontSize: 15}}>1. Effective Price (Cart >= 1000): </Text>
           <Text style={{fontSize: 15, color: 'red'}}>₹{this.offer1Price.toFixed(2)}</Text>             
         </View>
 
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 15}}>2. Effective Price on Cart >= 2000: </Text>
+          <Text style={{fontSize: 15}}>2. Effective Price (Cart >= 2000): </Text>
           <Text style={{fontSize: 15, color: 'red'}}>₹{this.offer2Price.toFixed(2)}</Text>             
         </View>
 
