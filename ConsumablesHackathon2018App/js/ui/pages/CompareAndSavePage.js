@@ -11,6 +11,7 @@ import {CartItem} from '../components/CartItem';
 import { BarcodeMapper } from '../../data/BarcodeMapper';
 import { Savings } from '../components/Savings';
 import {LogoTitleCompareAndSearch} from '../components/LogoTitleCompareAndSearch';
+import {StringUtil} from '../../util/StringUtil';
 
 export class CompareAndSavePage extends Component {
   static navigationOptions = {
@@ -24,9 +25,12 @@ export class CompareAndSavePage extends Component {
       asins,
       displayMode: "asinlist",
       totalSaving: 0,
-      scannedAsin: "",
-      cartItems: CartStore.getAllCartItems()
+      scannedAsin: undefined,
+      cartItems: CartStore.getAllCartItems(),
     };
+
+    this.customerPrice = {};
+
     this.asinCount = asins.length + 1;
     this.scanProcessing = 0;
     this.startTime = new Date();
@@ -107,6 +111,7 @@ export class CompareAndSavePage extends Component {
       return (
         <CompareAndSaveDP pageMode={"External"} asin={this.state.scannedAsin} 
                           navigation={this.props.navigation} 
+                          onCustomerPriceChange={(customerPrice) => this.onCustomerPriceChange(this.state.scannedAsin, customerPrice)}
                           onBack={() => this.onDpBackPress()}/>
       )
     } else {
@@ -135,7 +140,7 @@ export class CompareAndSavePage extends Component {
   }
 
   addAsinToCart(scannedAsin, barcode) {
-    let size = CartStore.getAllCartItems().length;
+    let size = this.state.cartItems.length;
     const cartItem = {
       cartItemId: size + 1,
       asin: scannedAsin.asin,
@@ -180,4 +185,12 @@ export class CompareAndSavePage extends Component {
   onDetailPage(cartItem) {
     this.setState({currentCartItemForDp: cartItem, dpModalVisible: true});
   }  
+
+  onCustomerPriceChange(scannedAsin, customerPrice) {
+    const cartItem = CartStore.getCartItemFromAsin(scannedAsin.asin);
+    let newCartItem = cartItem;
+    newCartItem.externalPrice = parseFloat(customerPrice);
+    CartStore.saveCartItem(newCartItem);
+    this.setState({cartItems: CartStore.getAllCartItems()});
+  }
 }

@@ -92,6 +92,8 @@ export class CompareAndSaveDP extends Component {
         <TextInput
           style={{fontSize: 15}}
           onChangeText={(text) => this.setState({customerPrice: text})}
+          onSubmitEditing={(event) => this.onCustomerPriceChange(event)}
+          keyboardType="numeric"
           value={this.state.customerPrice.toString()}
         />
       </View>
@@ -154,6 +156,12 @@ export class CompareAndSaveDP extends Component {
   confirm() {
     this.props.onBack();
     return;
+  }
+
+  onCustomerPriceChange(event) {
+    if (this.props.onCustomerPriceChange != undefined) {
+      this.props.onCustomerPriceChange(this.state.customerPrice);
+    }
   }
 
   onGrammageChange(variation) {

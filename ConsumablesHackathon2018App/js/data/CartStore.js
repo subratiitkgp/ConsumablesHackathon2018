@@ -18,6 +18,11 @@ export class CartStore {
     return this.cloneAndParseCartItem(tmpid);
   }
 
+  static getCartItemFromAsin(asin) {
+    let cartItem = Store.getSingle(this.getCartSchema().name, 'asin = "' + asin + '"');
+    return this.cloneAndParseCartItem(cartItem);
+  }
+
   static getAllCartItems() {
     let ids = Store.getAll(this.getCartSchema().name);
     return ids.map(id => this.cloneAndParseCartItem(id));
