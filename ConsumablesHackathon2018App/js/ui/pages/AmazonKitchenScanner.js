@@ -160,7 +160,7 @@ export class AmazonKitchenScanner extends Component {
                   this.scanProcessing = 0;
                   this.setState({dpModalVisible: false});
                 }
-                this.props.navigation.navigate("CartPage")
+                this.props.navigation.navigate("CartPage", {source: "Internal"})
               }}
           />
           </View>

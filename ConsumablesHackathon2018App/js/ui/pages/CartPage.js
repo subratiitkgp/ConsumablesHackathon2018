@@ -27,8 +27,16 @@ export class CartPage extends Component {
   renderFooter() {
     return (
       <Button
-        title="Submit"
-        onPress={() => this.props.navigation.navigate("ModifySticker")}
+        title="Checkout"
+        onPress={() => {
+          const source = this.props.navigation.getParam('source');
+          if (source === "Internal") {
+            this.props.navigation.navigate("ModifySticker");
+          } else {
+            CartStore.deleteAllCartItems();
+            this.props.navigation.navigate("HomePage");
+          }
+        }}
       />
     );
   }

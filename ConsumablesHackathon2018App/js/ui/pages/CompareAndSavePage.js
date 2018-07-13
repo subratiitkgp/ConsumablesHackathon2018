@@ -37,8 +37,36 @@ export class CompareAndSavePage extends Component {
     if (this.scanProcessing === 1) return;
     this.scanProcessing = 1;
     const barcode = data.data;
-    // const barcode = "ext1";
     const scannedAsin = AmazonAsinStore.getAsinFromExternalBarcode(barcode);
+
+    if (scannedAsin === undefined || Object.keys(scannedAsin).length === 0) {
+      Alert.alert("Invalid code", "Could not identify asin for barcode: " + barcode,
+      [{text: 'Ok', onPress: () => {
+        setTimeout(() => this.scanProcessing = 0, 1500);
+        }}
+      ]);
+      return;
+    }
+
+    const cartItems = this.state.cartItems;
+
+    const alreadyInCart = cartItems.filter(cartItem => {
+      const cartAsin = AmazonAsinStore.getAsin(cartItem.asin);
+      if (cartAsin.asin === scannedAsin.asin || 
+          cartAsin.variationgroup === scannedAsin.variationgroup) {
+          return true;
+      }
+    });
+
+    if (alreadyInCart != undefined && alreadyInCart.length > 0) {
+      Alert.alert("Already Added", "Already added",
+      [{text: 'Ok', onPress: () => {
+        setTimeout(() => this.scanProcessing = 0, 1500);
+        }}
+      ]);
+      return;
+    }
+
     this.addAsinToCart(scannedAsin, barcode);
     this.setState({displayMode: "asinDetail", scannedAsin});
   }
@@ -69,34 +97,6 @@ export class CompareAndSavePage extends Component {
     )
   }
 
-  renderButtons() {
-    return (
-      <View style={{margin: 5, width: '97%', flexDirection: 'row', borderWidth: 1}}>
-        <View style={{margin: 5}}>
-        <Button
-          title="Checkout"
-          onPress={() => {
-            if (this.state.asins.length == 0) {
-              Alert.alert("Warning", "Please add few products to checkout");
-              return;
-            }
-            const endTime = new Date();
-            const timeDiff = (endTime - this.startTime) / 1000;
-            Alert.alert("Congrats", "You have shopped for " + this.state.asins.length + " item(s) in " + timeDiff + " seconds",
-                        [{text: "OK", onPress: () => this.deleteAllAsins()}]
-                       );
-          }}
-        />
-        </View>
-
-      <View style={{margin:5, flexDirection: 'row'}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Total Saving: </Text>
-          <Text style={{fontSize: 20, color: 'red'}}>₹{this.state.totalSaving.toFixed(2)}</Text>             
-      </View>
-    </View>
-    )
-  }
-
   onDpBackPress() {
     this.setState({displayMode: "asinlist"});
     this.scanProcessing = 0;
@@ -122,7 +122,7 @@ export class CompareAndSavePage extends Component {
               title="Checkout"
               onPress={() => {
                 if (this.state.dpModalVisible === true) this.setState({dpModalVisible: false});
-                this.props.navigation.navigate("CartPage")
+                this.props.navigation.navigate("CartPage", { source: "External"})
               }}
           />
           </View>
