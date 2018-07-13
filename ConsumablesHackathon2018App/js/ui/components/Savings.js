@@ -21,10 +21,11 @@ export class Savings extends Component {
         for(let cartItem of cartItems) {
             if(cartItem.source === 'Internal' || cartItem.source === 'internal'){
                const asin = AmazonAsinStore.getAsin(cartItem.asin);
-               savings = savings + (asin.actualprice - asin.price);
+               const quantity = cartItem.quantity;
+               savings = savings + ((asin.actualprice - asin.price) * quantity);
             } else {
                 if(cartItem.externalPrice > 0) {
-                    savings = savings + (cartItem.actualprice - cartItem.externalPrice);
+                    savings = savings + ((cartItem.actualprice - cartItem.externalPrice) * cartItem.quantity);
                 }
             }
         }
