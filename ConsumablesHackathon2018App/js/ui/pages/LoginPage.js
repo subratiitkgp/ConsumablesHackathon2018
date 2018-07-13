@@ -37,16 +37,52 @@ export class LoginPage extends Component {
     return (
       <View style={{flex: 1, justifyContent: "space-evenly", alignItems: 'center'}}>
         <Button
-          title="Customer 1"
-          onPress={() => this.props.navigation.navigate("AmazonKitchenScanner")}
+          title="Pulkit"
+          onPress={() => {
+            Alert.alert("Option", "Please Select Shopping Mode",
+            [{text: 'Compare with Amazon Pantry', onPress: () => {
+              this.props.navigation.navigate("CompareAndSavePage", {customerId: 1});
+            }},  
+            {text: 'Shop from Amazon Pantry', onPress: () => {
+              this.props.navigation.navigate("SearchPage", {customerId: 1});
+            }},
+            {text: 'Amazon Kitchen', onPress: () => {
+              this.props.navigation.navigate("AmazonKitchenScanner", {customerId: 1});
+            }}
+            ])
+          }}
         />
         <Button
-          title="Customer 2"
-          onPress={() => this.props.navigation.navigate("CompareAndSavePage")}
+          title="Anand"
+          onPress={() => {
+            Alert.alert("Option", "Please Select Shopping Mode",
+            [{text: 'Compare with Amazon Pantry', onPress: () => {
+              this.props.navigation.navigate("CompareAndSavePage", {customerId: 2});
+            }},  
+            {text: 'Shop from Amazon Pantry', onPress: () => {
+              this.props.navigation.navigate("SearchPage", {customerId: 2});
+            }},
+            {text: 'Amazon Kitchen', onPress: () => {
+              this.props.navigation.navigate("AmazonKitchenScanner", {customerId: 2});
+            }}
+            ])
+          }}
         />
         <Button
-          title="Customer 3"
-          onPress={() => this.props.navigation.navigate("CartPage")}
+          title="Kalyan"
+          onPress={() => {
+            Alert.alert("Option", "Please Select Shopping Mode",
+            [{text: 'Compare with Amazon Pantry', onPress: () => {
+              this.props.navigation.navigate("CompareAndSavePage", {customerId: 3});
+            }},  
+            {text: 'Shop from Amazon Pantry', onPress: () => {
+              this.props.navigation.navigate("SearchPage", {customerId: 3});
+            }},
+            {text: 'Amazon Kitchen', onPress: () => {
+              this.props.navigation.navigate("AmazonKitchenScanner", {customerId: 3});
+            }}
+            ])
+          }}
         />
         <Button
           title="Reset Data"
