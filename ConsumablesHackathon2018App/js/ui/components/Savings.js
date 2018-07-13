@@ -26,10 +26,11 @@ export class Savings extends Component {
                savings = savings + ((asin.actualprice - asin.price) * quantity);
                price = price + asin.price * quantity;
             } else {
+                const asin = AmazonAsinStore.getAsin(cartItem.asin);
                 if(cartItem.externalPrice > 0) {
-                    savings = savings + ((cartItem.actualprice - cartItem.externalPrice) * cartItem.quantity);
+                    savings = savings + ((asin.price - cartItem.externalPrice) * cartItem.quantity);
                 }
-                price = price + cartItem.actualprice * cartItem.quantity;
+                price = price + asin.price * cartItem.quantity;
             }
         }
 
