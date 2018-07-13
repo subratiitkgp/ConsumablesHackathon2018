@@ -145,6 +145,7 @@ export class AmazonKitchenScanner extends Component {
   }
 
   onDetailPage(cartItem) {
+    this.scanProcessing = 1;
     this.setState({currentCartItemForDp: cartItem, dpModalVisible: true});
   }
 
@@ -178,6 +179,7 @@ export class AmazonKitchenScanner extends Component {
             transparent={false}
             visible={this.state.dpModalVisible}
             onRequestClose={() => {
+              this.scanProcessing = 1;
               this.setState({cartItems: CartStore.getAllCartItems(), dpModalVisible: false});
             }}>
             <CompareAndSaveDP pageMode={"Internal"} cartItem={currentCartItemForDp} asin={asin} 
