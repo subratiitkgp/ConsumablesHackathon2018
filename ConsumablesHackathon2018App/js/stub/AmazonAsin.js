@@ -62,7 +62,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "bourbon",
         variation:"120 g",
-        externalBarcode: "ext5"
+        externalBarcode: "100745155"
 
     },
     {
@@ -129,6 +129,45 @@ export const AmazonAsinList = [
         variationgroup: "madhur",
         variation:"5 kg",
         externalBarcode: "ext9"
+    },
+    {
+        asin:"B01HBEUTGM",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61421a+6uRL._AC_UL648_SR500,648_FMwebp_QL65_.jpg",
+        available:100,
+        title:"Kurkure Puffcorn",
+        price: 19.00,
+        actualprice: 20.00,
+        asingroup:"chips",
+        type:"amazon",
+        variationgroup: "Kurkure",
+        variation:"60 g",
+        externalBarcode: "8901491366052"
+    },
+    {
+        asin:"B01H5KWTH4",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61jiAsaEHEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        available:100,
+        title:"Little Hearts",
+        price: 8.00,
+        actualprice: 10.00,
+        asingroup:"chips",
+        type:"amazon",
+        variationgroup: "Little",
+        variation:"37 g",
+        externalBarcode: "B01HBEUTGM"
+    },
+    {
+        asin:"B01GCE8NJ2",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61jiAsaEHEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        available:100,
+        title:"Lite Chiwda",
+        price: 25.00,
+        actualprice: 25.00,
+        asingroup:"chips",
+        type:"amazon",
+        variationgroup: "Lite",
+        variation:"150 g",
+        externalBarcode: "B01GCE8NJ2"
     }
     
 ]
