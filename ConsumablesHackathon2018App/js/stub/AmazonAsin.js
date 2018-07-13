@@ -10,7 +10,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "SurfExcel",
         variation:"2 kg",
-        externalBarcode: "int1"
+        externalBarcode: "8901030556807"
     },
     {
         asin:"B01CJVVUY2",
@@ -210,4 +210,5 @@ export const AmazonAsinList = [
     }
     
 ]
+
 
