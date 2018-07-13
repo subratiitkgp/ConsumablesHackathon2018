@@ -10,7 +10,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "SurfExcel",
         variation:"2 kg",
-        externalBarcode: "ext1"
+        externalBarcode: "8901030556807"
     },
     {
         asin:"B01CJVVUY2",
@@ -168,7 +168,45 @@ export const AmazonAsinList = [
         variationgroup: "Lite",
         variation:"150 g",
         externalBarcode: "B01GCE8NJ2"
+    },
+    {
+        asin:"B01CJUB700",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61jiAsaEHEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        available:100,
+        title:"Godrej Ezee",
+        price: 84.00,
+        actualprice: 90.00,
+        asingroup:"detergent",
+        type:"amazon",
+        variationgroup: "Ezee",
+        variation:"500 g",
+        externalBarcode: "8901023005817"
+    },
+    {
+        asin:"B01GCFBG3G",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61JoM2s1PvL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        available:100,
+        title:"Aashirvaad Superior",
+        price: 400.00,
+        actualprice: 344.00,
+        asingroup:"atta",
+        type:"amazon",
+        variationgroup: "Aashirvaad",
+        variation:"10 kg",
+        externalBarcode: "B01GCFBG3G"
+    },
+    {
+        asin:"B01GCDVOTE",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61JoM2s1PvL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        available:100,
+        title:"Aashirvaad Superior",
+        price: 206.00,
+        actualprice: 235.00,
+        asingroup:"atta",
+        type:"amazon",
+        variationgroup: "Aashirvaad",
+        variation:"5 kg",
+        externalBarcode: "B01GCDVOTE"
     }
     
 ]
-
