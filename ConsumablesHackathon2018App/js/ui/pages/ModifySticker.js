@@ -14,7 +14,7 @@ import { StringUtil } from '../../util/StringUtil';
 
 export class ModifySticker extends Component {
   static navigationOptions = {
-    title: "Modify Sticker"
+    title: "Update Sticker Personalization"
   };
 
   constructor(props) {

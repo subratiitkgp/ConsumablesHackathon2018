@@ -155,6 +155,7 @@ export class AmazonKitchenScanner extends Component {
           <Button
               title="Checkout"
               onPress={() => {
+                if (this.state.dpModalVisible === true) this.setState({dpModalVisible: false});
                 this.props.navigation.navigate("CartPage")
               }}
           />
@@ -172,7 +173,7 @@ export class AmazonKitchenScanner extends Component {
     const asin = AmazonAsinStore.getAsin(currentCartItemForDp.asin);
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
         <Modal
             transparent={false}
             visible={this.state.dpModalVisible}
@@ -186,6 +187,7 @@ export class AmazonKitchenScanner extends Component {
                       this.setState({cartItems: CartStore.getAllCartItems(), dpModalVisible: false});
                     }}
                     />
+            {this.renderFooter()}
         </Modal>  
       </View>
     );
