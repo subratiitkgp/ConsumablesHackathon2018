@@ -67,10 +67,12 @@ export class ModifySticker extends Component {
     const originalBarcodeDetails = BarcodeMapper.getBarcode(cartItem.fromBarcode);
     const originalAsin = BarcodeMapper.getAsinFromBarcode(cartItem.fromBarcode);
     const modifiedAsin = AmazonAsinStore.getAsin(cartItem.asin);
-    const originalText = "Original: Variation - " + originalAsin.variation +
-                         ", quantity - " + originalBarcodeDetails.quantity;
-    const modifiedText = "Your Choice: Variation - " + modifiedAsin.variation + 
-                         ", quantity - " + cartItem.quantity;
+    const originalText = "Variation - " + originalAsin.variation +
+                         ", Quantity - " + originalBarcodeDetails.quantity;
+    const modifiedText = "Variation - " + modifiedAsin.variation +
+                         ", Quantity - " + cartItem.quantity;
+    const oriText = "Original: ";
+    const modText = "Your Choice: ";
 
     const asin = AmazonAsinStore.getAsin(cartItem.asin);                     
     const switchValue = this.state.switchValues[cartItem.asin] === undefined ? false : 
@@ -81,9 +83,16 @@ export class ModifySticker extends Component {
                       justifyContent: 'space-between'}}>
           <Image source={{uri: asin.imageURL}} style={{width: 50 , height: 60, margin: 5}} />
           <View style={{width: 280}}>
-            <Text style={{fontSize: 13}}>{originalText}</Text>
-            <Text style={{fontSize: 13}}>{modifiedText}</Text>
+             <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 13, fontWeight: 'bold'}}>{oriText}</Text>
+              <Text style={{fontSize: 13}}>{originalText}</Text>
+             </View>
+             <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 13, fontWeight: 'bold'}}>{modText}</Text>
+              <Text style={{fontSize: 13}}>{modifiedText}</Text>
+             </View>
           </View>
+
         </View>  
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text>Accept</Text>
