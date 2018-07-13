@@ -5,13 +5,11 @@ import { View, Text, Image } from 'react-native';
 
 export class LogoTitle extends Component {
     render() {
+        const pantryLogo = "../../images/Pantry_Logo3.jpeg";
         return (
-            <View style={{flexDirection: 'row', width: '97%', borderWidth: 0, margin: 5, alignItems: 'center', justifyContent: "flex-start"}}>
-            <Image
-                source={{uri: "https://images-eu.ssl-images-amazon.com/images/I/51Kt7nFLqEL._SS140_.jpg"}}
-                style={{ width: 30 , height: 40 }}
-            />
-            <Text style={{fontSize: 25, alignItems: 'center', marginLeft: 30}}>{"Amazon Kitchen"}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image source={require(pantryLogo)} style={{width: 120 , height: 30, margin: 5, marginRight: 10}} />
+              <Text style={{fontSize: 20}}>{"Amazon Kitchen"}</Text>
             </View>
         );
     }

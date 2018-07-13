@@ -82,7 +82,7 @@ export class CartItem extends Component {
       <View style={{flexDirection: 'row', width: '97%', alignItems: 'center', justifyContent: "space-between"}}>
         <TouchableWithoutFeedback onPress={() => this.onItemClick(asin, cartItem)}>
           <View style={{flexDirection: 'row', width: 240, alignItems: 'center'}}>
-            <Image source={{uri: asin.imageURL}} style={{width: 30 , height: 40, margin: 5, marginRight: 30}} />
+            <Image source={{uri: asin.imageURL}} style={{width: 60 , height: 60, margin: 5, marginRight: 20}} />
             <Text style={{fontSize: 15}}>{asin.title}</Text>
           </View>
         </TouchableWithoutFeedback>
