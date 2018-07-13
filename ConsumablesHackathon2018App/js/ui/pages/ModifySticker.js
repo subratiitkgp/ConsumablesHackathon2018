@@ -111,6 +111,8 @@ export class ModifySticker extends Component {
         BarcodeMapper.saveBarcode(originalBarcodeDetails);
       }
     }
+
+    CartStore.deleteAllCartItems();
     this.props.navigation.navigate("HomePage");
   }
 
