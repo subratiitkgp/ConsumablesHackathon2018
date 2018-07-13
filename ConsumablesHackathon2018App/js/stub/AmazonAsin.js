@@ -158,7 +158,7 @@ export const AmazonAsinList = [
     },
     {
         asin:"B01GCE8NJ2",
-        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61jiAsaEHEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/51Jt6ZnV0dL._AC_UL547_SR422,547_FMwebp_QL65_.jpg",
         available:100,
         title:"Lite Chiwda",
         price: 25.00,
@@ -171,7 +171,7 @@ export const AmazonAsinList = [
     },
     {
         asin:"B01CJUB700",
-        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/61jiAsaEHEL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
+        imageURL:"https://images-eu.ssl-images-amazon.com/images/I/51-rtI-TMbL._AC_UL492_SR380,492_FMwebp_QL65_.jpg",
         available:100,
         title:"Godrej Ezee",
         price: 84.00,
