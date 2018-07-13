@@ -156,7 +156,10 @@ export class AmazonKitchenScanner extends Component {
           <Button
               title="Checkout"
               onPress={() => {
-                if (this.state.dpModalVisible === true) this.setState({dpModalVisible: false});
+                if (this.state.dpModalVisible === true) {
+                  this.scanProcessing = 0;
+                  this.setState({dpModalVisible: false});
+                }
                 this.props.navigation.navigate("CartPage")
               }}
           />
@@ -179,7 +182,7 @@ export class AmazonKitchenScanner extends Component {
             transparent={false}
             visible={this.state.dpModalVisible}
             onRequestClose={() => {
-              this.scanProcessing = 1;
+              this.scanProcessing = 0;
               this.setState({cartItems: CartStore.getAllCartItems(), dpModalVisible: false});
             }}>
             <CompareAndSaveDP pageMode={"Internal"} cartItem={currentCartItemForDp} asin={asin} 
