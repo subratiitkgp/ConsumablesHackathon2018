@@ -18,17 +18,27 @@ export class Savings extends Component {
     computeSavings() {
         const cartItems = CartStore.getAllCartItems();
         let savings = 0.0;
+        let price = 0.0;
         for(let cartItem of cartItems) {
             if(cartItem.source === 'Internal' || cartItem.source === 'internal'){
                const asin = AmazonAsinStore.getAsin(cartItem.asin);
                const quantity = cartItem.quantity;
                savings = savings + ((asin.actualprice - asin.price) * quantity);
+               price = price + asin.price * quantity;
             } else {
                 if(cartItem.externalPrice > 0) {
                     savings = savings + ((cartItem.actualprice - cartItem.externalPrice) * cartItem.quantity);
                 }
+                price = price + cartItem.actualprice * cartItem.quantity;
             }
         }
+
+        if (price >= 2000) {
+            savings = savings + 0.15 * price;
+        } else if (price >= 1000) {
+            savings = savings + 0.10 * price;
+        }
+
         this.state.savings = savings;
         return this.state.savings.toFixed(2);
     }
