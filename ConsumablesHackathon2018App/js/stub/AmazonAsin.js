@@ -154,7 +154,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Little",
         variation:"37 g",
-        externalBarcode: "B01HBEUTGM"
+        externalBarcode: "B01H5KWTH4"
     },
     {
         asin:"B01GCE8NJ2",
@@ -180,7 +180,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Ezee",
         variation:"500 g",
-        externalBarcode: "int5"
+        externalBarcode: "8901023005817"
     },
     {
         asin:"B01GCFBG3G",
@@ -193,7 +193,7 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Aashirvaad",
         variation:"10 kg",
-        externalBarcode: "int6"
+        externalBarcode: "ext9"
     },
     {
         asin:"B01GCDVOTE",
@@ -206,7 +206,8 @@ export const AmazonAsinList = [
         type:"amazon",
         variationgroup: "Aashirvaad",
         variation:"5 kg",
-        externalBarcode: "int7"
+        externalBarcode: "ext10"
     }
     
 ]
+
