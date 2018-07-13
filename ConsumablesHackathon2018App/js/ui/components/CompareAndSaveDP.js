@@ -19,9 +19,9 @@ export class CompareAndSaveDP extends Component {
       cartItem: this.props.cartItem,
       customerPrice: this.props.asin.price
     }
-
-    this.offer1Price = 10; // this.ourPrice * 0.9;
-    this.offer2Price = 11; // this.ourPrice * 0.85;
+    this.ourPrice = this.state.asin.price;
+    this.offer1Price = this.ourPrice * 0.9;
+    this.offer2Price = this.ourPrice * 0.85;
   }
 
   render() {

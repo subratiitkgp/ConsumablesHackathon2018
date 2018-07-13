@@ -6,10 +6,15 @@ import { Store } from '../../data/Store';
 import { AmazonAsinStore } from '../../data/AmazonAsinStore';
 import { RNCamera } from 'react-native-camera';
 import { CompareAndSaveDP } from '../components/CompareAndSaveDP';
+import { CartStore } from '../../data/CartStore';
+import {CartItem} from '../components/CartItem';
+import { BarcodeMapper } from '../../data/BarcodeMapper';
+import { Savings } from '../components/Savings';
+import {LogoTitleCompareAndSearch} from '../components/LogoTitleCompareAndSearch';
 
 export class CompareAndSavePage extends Component {
   static navigationOptions = {
-    title: "Compare & Save"
+    headerTitle: <LogoTitleCompareAndSearch />,
   };
 
   constructor(props) {
@@ -19,11 +24,13 @@ export class CompareAndSavePage extends Component {
       asins,
       displayMode: "asinlist",
       totalSaving: 0,
-      scannedAsin: ""
+      scannedAsin: "",
+      cartItems: CartStore.getAllCartItems()
     };
     this.asinCount = asins.length + 1;
     this.scanProcessing = 0;
     this.startTime = new Date();
+    this.customerID = 1;
   }
 
   onBarCodeRead(data, type) {
@@ -32,6 +39,7 @@ export class CompareAndSavePage extends Component {
     const barcode = data.data;
     // const barcode = "ext1";
     const scannedAsin = AmazonAsinStore.getAsinFromExternalBarcode(barcode);
+    this.addAsinToCart(scannedAsin, barcode);
     this.setState({displayMode: "asinDetail", scannedAsin});
   }
 
@@ -41,7 +49,7 @@ export class CompareAndSavePage extends Component {
       <View style={{flex: 1}}>
         {this.renderCamera()}
         {this.renderCartOrDp()}
-        {this.renderButtons()}
+        {this.renderFooter()}
       </View>
     )
   }
@@ -106,11 +114,70 @@ export class CompareAndSavePage extends Component {
     }
   }
 
-  renderAsinList() {
+  renderFooter() {
     return (
-      <View style={{flex: 1, width: "97%", margin : 5, borderWidth: 1}}>
-        <Text style={{fontSize: 20}}>Cart</Text>
+      <View style={{margin: 5, width: '97%', flexDirection: 'row', borderWidth: 1, justifyContent: 'space-between'}}>
+          <View style={{margin: 5}}>
+          <Button
+              title="Checkout"
+              onPress={() => {
+                if (this.state.dpModalVisible === true) this.setState({dpModalVisible: false});
+                this.props.navigation.navigate("CartPage")
+              }}
+          />
+          </View>
+
+          <View style={{margin: 5}}>
+          <Savings />
+          </View>
       </View>
+    );
+  }
+
+  addAsinToCart(scannedAsin, barcode) {
+    let size = CartStore.getAllCartItems().length;
+    const cartItem = {
+      cartItemId: size + 1,
+      asin: scannedAsin.asin,
+      quantity: 1,
+      customerId: this.customerID, 
+      fromBarcode: barcode,
+      source: "External",
+      appliedOffer: "",
+      externalPrice: 0
+    }
+    CartStore.saveCartItem(cartItem);
+    this.setState({cartItems: CartStore.getAllCartItems()})
+  }
+
+  renderAsinList() {
+    const cartItems = this.state.cartItems;
+    return (
+        <FlatList
+          removeClippedSubviews={true}
+          data={cartItems}
+          keyExtractor={(cartItem) => cartItem.asin + cartItem.quantity.toString()}
+          initialNumToRender={3}
+          extraData={this.state}
+          renderItem={(cartItems) => this.renderCartItem(cartItems.item, cartItems.index)}
+        />
     )
   }
+
+  renderCartItem(cartItem, index) {
+    return (
+      <CartItem cartItem={cartItem} renderSecondRow={false} 
+      onQuantityChange={(cartItem) => this.onQuantityChange(cartItem.asin, cartItem.quantity)}
+      onItemClick={(cartItem) => this.onDetailPage(cartItem)}
+      />
+    );
+  }
+  
+  onQuantityChange(cartItem) {
+    this.setState({cartItems: CartStore.getAllCartItems()});
+  }
+
+  onDetailPage(cartItem) {
+    this.setState({currentCartItemForDp: cartItem, dpModalVisible: true});
+  }  
 }
