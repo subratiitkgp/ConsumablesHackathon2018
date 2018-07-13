@@ -104,7 +104,6 @@ export class CompareAndSaveDP extends Component {
 
     return (
       <View style={{ flexDirection: 'row'}}>
-        <Text style={{fontSize: 15, fontWeight: 'bold'}}>Weight: </Text>
         <GrammageSelector onValueChange={(changedValue) => this.onGrammageChange(changedValue)}
                           defaultGrammage={defaultGrammage} grammageValues={grammageValues} />              
       </View>

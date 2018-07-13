@@ -23,7 +23,7 @@ export class GrammageSelector extends Component {
   render() {
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text>Weight</Text>
+        <Text style={{fontSize: 15, fontWeight: 'bold'}}>Weight: </Text>
         <Picker
           mode="dropdown"
           selectedValue={this.state.grammageSelected}
