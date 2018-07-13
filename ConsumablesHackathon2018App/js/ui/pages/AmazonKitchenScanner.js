@@ -46,7 +46,6 @@ export class AmazonKitchenScanner extends Component {
     }
     CartStore.saveCartItem(cartItem);
     this.setState({cartItems: CartStore.getAllCartItems()})
-    this.forceUpdate();
   }
 
   render() {
@@ -55,8 +54,8 @@ export class AmazonKitchenScanner extends Component {
       <View style={{flex: 1}}>
         {this.renderCamera()}
         {this.renderAsinList()}
-        {this.renderFooter()}
         {this.renderDpModal(this.state.currentCartItemForDp)}
+        {this.renderFooter()}
       </View>
     )
   }
@@ -81,6 +80,15 @@ export class AmazonKitchenScanner extends Component {
     this.scanProcessing = 1;
     let barcode = data.data;
     const scannedAsin = BarcodeMapper.getAsinFromBarcode(barcode);
+    if (scannedAsin === undefined || Object.keys(scannedAsin).length === 0) {
+      Alert.alert("Invalid code", "Could not identify asin for barcode: " + barcode,
+      [{text: 'Ok', onPress: () => {
+        setTimeout(() => this.scanProcessing = 0, 1500);
+        }}
+      ]);
+      return;
+    }
+
     const cartItems = this.state.cartItems;
 
     const alreadyInCart = cartItems.filter(cartItem => {
@@ -115,7 +123,7 @@ export class AmazonKitchenScanner extends Component {
         <FlatList
           removeClippedSubviews={true}
           data={cartItems}
-          keyExtractor={(asin) => asin.asin}
+          keyExtractor={(cartItem) => cartItem.asin + cartItem.quantity.toString()}
           initialNumToRender={3}
           extraData={this.state}
           renderItem={(cartItems) => this.renderCartItem(cartItems.item, cartItems.index)}
@@ -126,7 +134,6 @@ export class AmazonKitchenScanner extends Component {
   renderCartItem(cartItem, index) {
     return (
       <CartItem cartItem={cartItem} renderSecondRow={false} 
-      //onBack={() => this.onQuantityChange(cartItem.asin, cartItem.quantity)}
       onQuantityChange={(cartItem) => this.onQuantityChange(cartItem.asin, cartItem.quantity)}
       onItemClick={(cartItem) => this.onDetailPage(cartItem)}
       />
@@ -135,7 +142,6 @@ export class AmazonKitchenScanner extends Component {
 
   onQuantityChange(cartItem) {
     this.setState({cartItems: CartStore.getAllCartItems()});
-    this.forceUpdate();
   }
 
   onDetailPage(cartItem) {
@@ -151,12 +157,6 @@ export class AmazonKitchenScanner extends Component {
               onPress={() => {
                 this.props.navigation.navigate("CartPage")
               }}
-          />
-          </View>
-          <View style={{margin: 5}}>
-          <Button
-              title="Refresh"
-              onPress={() => this.forceUpdate()}
           />
           </View>
 
@@ -178,12 +178,13 @@ export class AmazonKitchenScanner extends Component {
             visible={this.state.dpModalVisible}
             onRequestClose={() => {
               this.setState({cartItems: CartStore.getAllCartItems(), dpModalVisible: false});
-              this.forceUpdate();
-              console.log("Refresing page");
             }}>
             <CompareAndSaveDP pageMode={"Internal"} cartItem={currentCartItemForDp} asin={asin} 
                     navigation={this.props.navigation}
                     onQuantityChange={(cartItem) => this.onQuantityChange(cartItem)}
+                    onBack={() => {
+                      this.setState({cartItems: CartStore.getAllCartItems(), dpModalVisible: false});
+                    }}
                     />
         </Modal>  
       </View>

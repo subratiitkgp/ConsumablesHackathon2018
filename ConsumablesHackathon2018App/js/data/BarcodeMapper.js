@@ -21,6 +21,7 @@ export class BarcodeMapper {
 
   static getAsinFromBarcode(barcode) {
     let barcodeDetails = this.getBarcode(barcode);
+    if (barcodeDetails === undefined || Object.keys(barcodeDetails).length === 0) return undefined;
     return AmazonAsinStore.getAsin(barcodeDetails.asin);
   }
   static getAllBarcodes() {

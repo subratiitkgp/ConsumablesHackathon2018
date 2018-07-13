@@ -97,7 +97,9 @@ export class CompareAndSavePage extends Component {
   renderCartOrDp() {
     if (this.state.displayMode === "asinDetail") {
       return (
-        <CompareAndSaveDP pageMode={"External"} asin={this.state.scannedAsin} navigation={this.props.navigation} onBack={() => this.onDpBackPress()}/>
+        <CompareAndSaveDP pageMode={"External"} asin={this.state.scannedAsin} 
+                          navigation={this.props.navigation} 
+                          onBack={() => this.onDpBackPress()}/>
       )
     } else {
       return this.renderAsinList();
